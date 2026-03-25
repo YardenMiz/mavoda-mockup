@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>צור קשר — בית ספורט</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="skin/sport5_mockup.css">
+  <style>
+    .contact-section {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      padding: 0.75rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .contact-form button:hover {
+      background: #0056b3;
+    }
+    .contact-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .info-item h4 {
+      margin-top: 0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header class="mock-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="skin/design/logo.png" alt="לוגו" class="logo">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">ראשי</a>
+        <a href="news.html">חדשות</a>
+        <a href="leagues.html">ליגות</a>
+        <a href="gallery.html">גלריות</a>
+        <a href="contact.html">צור קשר</a>
+      </nav>
+      <div class="header-actions">
+        <input class="search" placeholder="חפש כתבה...">
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <section class="hero">
+      <img src="skin/design/top_pic00.jpg" alt="כותרת" class="hero-img">
+      <div class="hero-overlay">
+        <h1 class="hero-title">צור קשר</h1>
+        <p class="hero-lead">אנחנו כאן בשבילך</p>
+      </div>
+    </section>
+
+    <div class="contact-section">
+      <h2>משלחת ודרכי יצירת קשר</h2>
+      
+      <div class="contact-info">
+        <div class="info-item">
+          <h4>כתובת</h4>
+          <p>רחוב חורי 2<br>חיפה 3311306<br>ישראל</p>
+        </div>
+        <div class="info-item">
+          <h4>טלפון ודוא"ל</h4>
+          <p>טלפון: 04-8620820<br>דוא"ל: office@mavoda-haifa.org.il<br>פקס: 04-8620821</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">שלח לנו הודעה</h3>
+      <form class="contact-form">
+        <input type="text" placeholder="שמך" required>
+        <input type="email" placeholder="כתובת דואר אלקטרוני" required>
+        <input type="text" placeholder="נושא" required>
+        <textarea placeholder="הודעתך..." rows="6" required></textarea>
+        <button type="submit">שלח הודעה</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="mock-footer">
+    <div class="container footer-inner">
+      <div class="col">כתובתינו: רח' חורי 2, חיפה</div>
+      <div class="col">טלפון: 04-8620820</div>
+      <div class="col">דוא"ל: office@mavoda-haifa.org.il</div>
+    </div>
+  </footer>
+</body>
+</html>

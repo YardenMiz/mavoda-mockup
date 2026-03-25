@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>כדורעף - העמותה לספורט</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="skin/sport5_mockup.css">
+  <style>
+    .sport-detail-header {
+      background: linear-gradient(135deg, #3ac41e 0%, #024616 100%);
+      color: #fff;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 24px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    .sport-detail-header h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .tabs-nav {
+      display: flex;
+      gap: 0;
+      margin-bottom: 30px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .tabs-nav button {
+      flex: 1;
+      padding: 16px 20px;
+      border: none;
+      background: #f8f9fa;
+      color: #1f2937;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: Rubik, Arial, sans-serif;
+      border-bottom: 3px solid transparent;
+    }
+    .tabs-nav button:hover {
+      background: #e8f1f5;
+    }
+    .tabs-nav button.active {
+      background: #fff;
+      color: #0b66ff;
+      border-bottom-color: #0b66ff;
+    }
+    .tab-content {
+      display: none;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .year-selector {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .year-selector label {
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .year-selector select {
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      color: #1f2937;
+      font-family: Rubik, Arial, sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .results-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-right: 4px solid #0b66ff;
+    }
+    .results-item .teams {
+      flex: 1;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .results-item .score {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0b66ff;
+      margin: 0 16px;
+    }
+    .results-item .date {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #e8e8e8;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .regulations-text {
+      line-height: 1.8;
+      color: #4b5563;
+      font-size: 15px;
+    }
+    .regulations-text h3 {
+      color: #1f2937;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    .regulations-text p {
+      margin: 0 0 12px 0;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #0b66ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover {
+      color: #0050d8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Moving Strip -->
+  <div class="moving-strip">
+    <div class="strip-content">
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+    </div>
+  </div>
+
+  <header class="mock-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="skin/design/logo.png" alt="לוגו" class="logo">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">ראשי</a>
+        <a href="regulations.html">תקנונים</a>
+        <a href="leagues.html">ליגות</a>
+        <a href="gallery.html">גלריות</a>
+        <a href="contact.html">צור קשר</a>
+      </nav>
+      <div class="header-actions">
+        <input class="search" placeholder="חפש מקצוע...">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="index.html" class="back-link">← חזרה לעמוד הבית</a>
+
+    <div class="sport-detail-header">
+      <h1>כדורעף</h1>
+    </div>
+
+    <div class="tabs-nav">
+      <button class="tab-button active" data-tab="results">תוצאות אחרונות</button>
+      <button class="tab-button" data-tab="gallery">גלריה</button>
+      <button class="tab-button" data-tab="regulations">תקנון</button>
+    </div>
+
+    <!-- תוצאות אחרונות -->
+    <div id="results" class="tab-content active">
+      <div class="year-selector">
+        <label for="year-select">בחר שנה:</label>
+        <select id="year-select">
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+          <option value="2015">2015</option>
+        </select>
+      </div>
+
+      <div class="results-item">
+        <div>
+          <div class="teams">מכבי חיפה vs הפועל ת"א</div>
+          <div class="date">25 במרץ 2026</div>
+        </div>
+        <div class="score">3:2</div>
+      </div>
+
+      <div class="results-item">
+        <div>
+          <div class="teams">בני יהודה vs בית"ר</div>
+          <div class="date">22 במרץ 2026</div>
+        </div>
+        <div class="score">2:2</div>
+      </div>
+
+      <div class="results-item">
+        <div>
+          <div class="teams">הפועל חיפה vs מכבי נתניה</div>
+          <div class="date">19 במרץ 2026</div>
+        </div>
+        <div class="score">1:3</div>
+      </div>
+
+      <div class="results-item">
+        <div>
+          <div class="teams">עירוני חיפה vs מועדון הרצליה</div>
+          <div class="date">16 במרץ 2026</div>
+        </div>
+        <div class="score">4:1</div>
+      </div>
+    </div>
+
+    <!-- גלריה -->
+    <div id="gallery" class="tab-content">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=300&h=300&fit=crop" alt="תמונה 1">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1494942286556-6370a9867bbf?w=300&h=300&fit=crop" alt="תמונה 2">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=300&h=300&fit=crop" alt="תמונה 3">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=300&h=300&fit=crop" alt="תמונה 4">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=300&h=300&fit=crop" alt="תמונה 5">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f19106048c?w=300&h=300&fit=crop" alt="תמונה 6">
+        </div>
+      </div>
+    </div>
+
+    <!-- תקנון -->
+    <div id="regulations" class="tab-content">
+      <div class="regulations-text">
+        <h3>כללי המשחק</h3>
+        <p>
+          הליגה מנוהלת לפי הכללים הבינלאומיים של FIVB (פדרציה בינלאומית לכדורעף).
+          כל משחק מורכב משלוש סטות, והקבוצה הראשונה להגיע ל-25 נקודות בסט מנצחת את הסט (עם הפרש של לפחות 2 נקודות).
+        </p>
+
+        <h3>דרישות השתתפות</h3>
+        <p>
+          כל קבוצה חייבת להיות מורכבת מ-12-14 שחקנים רשומים.
+          על כל קבוצה להציג מנהל קבוצה וקוצ'ים מוסמכים.
+          דמי השתתפות חייבים להיות משולמים לפני תחילת העונה.
+        </p>
+
+        <h3>התנהגות ושיוך</h3>
+        <p>
+          על כל השחקנים להתנהג בכבוד לפי כללי ההתנהגות של הליגה.
+          כל שחקן המביע התנהגות לא ספורטיבית יעברו משמעות תמיד לוועדת משמעות.
+        </p>
+
+        <h3>מחלוקות</h3>
+        <p>
+          כל מחלוקת יש להגיש בתוך 48 שעות מסיום המשחק.
+          החלטות ועדת המשמעות סופיות ובלתי ניתנות לערעור.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mock-footer">
+    <div class="container footer-inner">
+      <div class="col">כתובתינו: רח' חורי 2, חיפה</div>
+      <div class="col">טלפון: 04-8620820</div>
+      <div class="col">דוא"ל: office@mavoda-haifa.org.il</div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const tabName = this.dataset.tab;
+        
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        
+        this.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+
+    document.getElementById('year-select').addEventListener('change', function() {
+      console.log('בחרת שנה: ' + this.value);
+    });
+  </script>
+</body>
+</html>

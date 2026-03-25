@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ליגות — בית ספורט</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="skin/sport5_mockup.css">
+  <style>
+    .hero-img {
+      width: 100%;
+      height: 210px;
+      object-fit: contain;
+      background: #f6f6f6;
+    }
+    .sports-categories {
+      padding: 20px 0;
+    }
+    .sports-categories h2 {
+      text-align: center;
+      color: #1f2937;
+      font-size: 28px;
+      margin: 0 0 20px 0;
+      font-weight: 700;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .category-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .category-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .category-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+    .category-card h4 {
+      text-align: center;
+      margin: 8px;
+      color: #1f2937;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <header class="mock-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="skin/design/logo.png" alt="לוגו" class="logo">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">ראשי</a>
+        <a href="news.html">חדשות</a>
+        <a href="leagues.html">ליגות</a>
+        <a href="gallery.html">גלריות</a>
+        <a href="contact.html">צור קשר</a>
+      </nav>
+      <div class="header-actions">
+        <input class="search" placeholder="חפש כתבה...">
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <section class="hero">
+      <img src="skin/design/leagues.png" alt="כותרת" class="hero-img">
+      <div class="hero-overlay">
+        <h1 class="hero-title">הליגות שלנו</h1>
+        <p class="hero-lead">טבלאות דירוג, תוצאות משחקים ועוד</p>
+      </div>
+    </section>
+
+    <aside class="side-articles">
+      <h3>מאמרים אחרונים</h3>
+      <div class="side-item">
+        <img src="skin/design/444.jpg" alt=""/>
+        <div class="side-text"><strong>ליגה בכדורגל</strong><br>תוצאות המשחקים האחרונים.</div>
+      </div>
+      <div class="side-item">
+        <img src="skin/design/555.jpg" alt=""/>
+        <div class="side-text"><strong>ליגה בכדורסל</strong><br>עדכון הטבלה השוטפת.</div>
+      </div>
+      <a class="more" href="#">עוד מידע</a>
+    </aside>
+
+    <div class="sports-categories">
+      <h2>ענפים</h2>
+      <div class="category-grid">
+        <div class="category-card">
+          <img src="skin/design/b8.jpg" alt="כדורעף">
+          <h4>כדורעף</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b6.jpg" alt="כדורסל">
+          <h4>כדורסל</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b5.jpg" alt="כדורגל">
+          <h4>כדורגל</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b4.jpg" alt="טניס שולחן">
+          <h4>טניס שולחן</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b2.jpg" alt="בואלינג">
+          <h4>באולינג</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b1.jpg" alt="אופני חרים">
+          <h4>אופני הרים</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b14.jpg" alt="ריצה">
+          <h4>ריצה</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b13.jpg" alt="שש בש">
+          <h4>שש בש</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b12.jpg" alt="טניס">
+          <h4>טניס</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b11.jpg" alt="שחייה">
+          <h4>שחייה</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/b10.jpg" alt="קטרגל">
+          <h4>קטרגל</h4>
+        </div>
+        <div class="category-card">
+          <img src="skin/design/Squash.jpeg" alt="סקוויש">
+          <h4>סקווש</h4>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="mock-footer">
+    <div class="container footer-inner">
+      <div class="col">כתובתינו: רח' חורי 2, חיפה</div>
+      <div class="col">טלפון: 04-8620820</div>
+      <div class="col">דוא"ל: office@mavoda-haifa.org.il</div>
+    </div>
+  </footer>
+</body>
+</html>
