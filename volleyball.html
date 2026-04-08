@@ -178,13 +178,32 @@
       </div>
       <nav class="main-nav">
         <a href="index.html">ראשי</a>
+        <a href="about.html">אודות</a>
         <a href="regulations.html">תקנונים</a>
         <a href="leagues.html">ליגות</a>
         <a href="gallery.html">גלריות</a>
         <a href="contact.html">צור קשר</a>
       </nav>
       <div class="header-actions">
-        <input class="search" placeholder="חפש מקצוע...">
+        <select class="search">
+          <option value="">חפש מקצוע...</option>
+          <option value="כדורגל">כדורגל</option>
+          <option value="כדורסל">כדורסל</option>
+          <option value="כדורעף">כדורעף</option>
+          <option value="כדורשת">כדורשת</option>
+          <option value="טניס">טניס</option>
+          <option value="שחייה">שחייה</option>
+          <option value="ריצה">ריצה</option>
+          <option value="אופני הרים">אופני הרים</option>
+          <option value="פדל">פדל</option>
+          <option value="פינג פונג">פינג פונג</option>
+          <option value="באולינג">באולינג</option>
+          <option value="סנוקר">סנוקר</option>
+          <option value="שחמט">שחמט</option>
+          <option value="קשתות">קשתות</option>
+          <option value="קטרגל">קטרגל</option>
+          <option value="סאפ">סאפ</option>
+        </select>
       </div>
     </div>
   </header>
@@ -318,6 +337,33 @@
     </div>
   </footer>
 
+  <script>
+    const sportMap = {
+      'כדורגל': 'soccer.html',
+      'כדורסל': 'basketball.html',
+      'כדורעף': 'volleyball.html',
+      'כדורשת': 'handball.html',
+      'טניס': 'tennis.html',
+      'שחייה': 'swimming.html',
+      'ריצה': 'running.html',
+      'אופני הרים': 'mountainbike.html',
+      'פדל': 'padel.html',
+      'פינג פונג': 'pingpong.html',
+      'באולינג': 'bowling.html',
+      'סנוקר': 'snooker.html',
+      'שחמט': 'backgammon.html',
+      'קשתות': 'archery.html',
+      'קטרגל': 'curling.html',
+      'סאפ': 'sup.html'
+    };
+
+    document.querySelector('.search').addEventListener('change', function() {
+      const sport = this.value.trim();
+      if (sportMap[sport]) {
+        window.location.href = sportMap[sport];
+      }
+    });
+  </script>
   <script>
     document.querySelectorAll('.tab-button').forEach(button => {
       button.addEventListener('click', function() {

@@ -56,6 +56,22 @@
   </style>
 </head>
 <body>
+  <!-- Moving Strip -->
+  <div class="moving-strip">
+    <div class="strip-content">
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+    </div>
+  </div>
   <header class="mock-header">
     <div class="container header-inner">
       <div class="logo-area">
@@ -63,38 +79,45 @@
       </div>
       <nav class="main-nav">
         <a href="index.html">ראשי</a>
-        <a href="news.html">חדשות</a>
+        <a href="about.html">אודות</a>
+        <a href="regulations.html">תקנונים</a>
         <a href="leagues.html">ליגות</a>
         <a href="gallery.html">גלריות</a>
         <a href="contact.html">צור קשר</a>
       </nav>
       <div class="header-actions">
-        <input class="search" placeholder="חפש כתבה...">
+        <select class="search">
+          <option value="">בחר ספורט...</option>
+          <option value="כדורגל">כדורגל</option>
+          <option value="כדורסל">כדורסל</option>
+          <option value="כדורעף">כדורעף</option>
+          <option value="כדורשת">כדורשת</option>
+          <option value="טניס">טניס</option>
+          <option value="שחייה">שחייה</option>
+          <option value="ריצה">ריצה</option>
+          <option value="אופני הרים">אופני הרים</option>
+          <option value="פדל">פדל</option>
+          <option value="פינג פונג">פינג פונג</option>
+          <option value="באולינג">באולינג</option>
+          <option value="סנוקר">סנוקר</option>
+          <option value="שחמט">שחמט</option>
+          <option value="קשתות">קשתות</option>
+          <option value="קטרגל">קטרגל</option>
+          <option value="סאפ">סאפ</option>
+        </select>
       </div>
     </div>
   </header>
 
   <main class="container main-grid">
     <section class="hero">
-      <img src="skin/design/leagues.png" alt="כותרת" class="hero-img">
+      <img src="" alt="" class="hero-img">
       <div class="hero-overlay">
         <h1 class="hero-title">הליגות שלנו</h1>
         <p class="hero-lead">טבלאות דירוג, תוצאות משחקים ועוד</p>
       </div>
     </section>
 
-    <aside class="side-articles">
-      <h3>מאמרים אחרונים</h3>
-      <div class="side-item">
-        <img src="skin/design/444.jpg" alt=""/>
-        <div class="side-text"><strong>ליגה בכדורגל</strong><br>תוצאות המשחקים האחרונים.</div>
-      </div>
-      <div class="side-item">
-        <img src="skin/design/555.jpg" alt=""/>
-        <div class="side-text"><strong>ליגה בכדורסל</strong><br>עדכון הטבלה השוטפת.</div>
-      </div>
-      <a class="more" href="#">עוד מידע</a>
-    </aside>
 
     <div class="sports-categories">
       <h2>ענפים</h2>
@@ -151,6 +174,34 @@
     </div>
 
   </main>
+
+  <script>
+    const sportMap = {
+      'כדורגל': 'soccer.html',
+      'כדורסל': 'basketball.html',
+      'כדורעף': 'volleyball.html',
+      'כדורשת': 'handball.html',
+      'טניס': 'tennis.html',
+      'שחייה': 'swimming.html',
+      'ריצה': 'running.html',
+      'אופני הרים': 'mountainbike.html',
+      'פדל': 'padel.html',
+      'פינג פונג': 'pingpong.html',
+      'באולינג': 'bowling.html',
+      'סנוקר': 'snooker.html',
+      'שחמט': 'backgammon.html',
+      'קשתות': 'archery.html',
+      'קטרגל': 'curling.html',
+      'סאפ': 'sup.html'
+    };
+
+    document.querySelector('.search').addEventListener('change', function() {
+      const sport = this.value.trim();
+      if (sportMap[sport]) {
+        window.location.href = sportMap[sport];
+      }
+    });
+  </script>
 
   <footer class="mock-footer">
     <div class="container footer-inner">
