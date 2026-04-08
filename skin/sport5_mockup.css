@@ -1,7 +1,7 @@
 /* Minimal mockup stylesheet to approximate sport5.co.il look */
 html{zoom:0.75}
 *{box-sizing:border-box}
-body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;padding-top:48px}
+body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;padding-top:38px}
 
 /* Moving Strip Animation */
 @keyframes scroll {
@@ -13,7 +13,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
   background: linear-gradient(90deg, #3ac41e 0%, #024616 100%);
   color: #fff;
   overflow: hidden;
-  padding: 15px 0;
+  padding: 10px 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -42,7 +42,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 }
 
 .container{max-width:1200px;margin:0 auto;padding:0 16px}
-.mock-header{background:#0b1620;color:#fff;position:sticky;top:48px;z-index:1000;display:flex;justify-content:center;width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.1)}
+.mock-header{background:#0b1620;color:#fff;position:sticky;top:38px;z-index:1000;display:flex;justify-content:center;width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.1)}
 .header-inner {
   display: flex;
   align-items: center;
