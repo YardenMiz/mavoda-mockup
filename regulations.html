@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>תקנונים - העמותה לספורט - מרחב חיפה והצפון</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="skin/sport5_mockup.css">
+  <style>
+    .header-actions {
+      text-align: center;
+    }
+    .header-actions .search {
+      width: 150px;
+      background: #3ac41e;
+      border: 1px solid #024616;
+      color: #000;
+      border-radius: 20px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .header-actions .search option {
+      color: #000;
+      background: #fff;
+    }
+    .dropdown-menu {
+      display: none !important;
+    }
+    .regulations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .regulation-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .regulation-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .regulation-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .regulation-card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .regulation-card .btn {
+      display: inline-block;
+      background: #3ac41e;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    .regulation-card .btn:hover {
+      background: #2a9e15;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <!-- Moving Strip -->
+  <div class="moving-strip">
+    <div class="strip-content">
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
+      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
+      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
+      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
+      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+    </div>
+  </div>
+
+  <header class="mock-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="skin/design/logo.png" alt="לוגו" class="logo">
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">ראשי</a>
+        <a href="about.html">אודות</a>
+        <a href="regulations.html">תקנונים</a>
+        <a href="leagues.html">ליגות</a>
+        <a href="gallery.html">גלריות</a>
+        <a href="contact.html">צור קשר</a>
+      </nav>
+      <div class="header-actions">
+        <select class="search">
+          <option value="">בחר ספורט...</option>
+          <option value="כדורגל">כדורגל</option>
+          <option value="כדורסל">כדורסל</option>
+          <option value="כדורעף">כדורעף</option>
+          <option value="כדורשת">כדורשת</option>
+          <option value="טניס">טניס</option>
+          <option value="שחייה">שחייה</option>
+          <option value="ריצה">ריצה</option>
+          <option value="אופני הרים">אופני הרים</option>
+          <option value="פדל">פדל</option>
+          <option value="פינג פונג">פינג פונג</option>
+          <option value="באולינג">באולינג</option>
+          <option value="סנוקר">סנוקר</option>
+          <option value="שחמט">שחמט</option>
+          <option value="קשתות">קשתות</option>
+          <option value="קטרגל">קטרגל</option>
+          <option value="סאפ">סאפ</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <img src="skin/design/327213644_1612965995798943_8657113124457048925_n.png" alt="כותרת" class="hero-img">
+      <div class="hero-overlay">
+        <h1 class="hero-title">תקנונים</h1>
+        <p class="hero-lead">תקנונים וכללים לכל הענפים הספורטיביים</p>
+      </div>
+    </section>
+
+    <section class="regulations-grid">
+      <div class="regulation-card">
+        <img src="skin/design/sports/soccer.jpg" alt="כדורגל">
+        <h3>כדורגל</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/basketball.jpg" alt="כדורסל">
+        <h3>כדורסל</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/volleyball.jpg" alt="כדורעף">
+        <h3>כדורעף</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/handball.jpg" alt="כדורשת">
+        <h3>כדורשת</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/tennis.jpg" alt="טניס">
+        <h3>טניס</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/swimming.jpg" alt="שחייה">
+        <h3>שחייה</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/running.jpg" alt="ריצה">
+        <h3>ריצה</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/mountainbike.jpg" alt="אופני הרים">
+        <h3>אופני הרים</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/padel.jpg" alt="פדל">
+        <h3>פדל</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/pingpong.jpg" alt="טניס שולחן">
+        <h3>טניס שולחן</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/bowling.jpg" alt="באולינג">
+        <h3>באולינג</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/snooker.jpg" alt="סנוקר">
+        <h3>סנוקר</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/backgammon.jpg" alt="שש בש">
+        <h3>שש בש</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/archery.jpg" alt="ירי ספורטיבי">
+        <h3>ירי ספורטיבי</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/curling.jpg" alt="קטרגל">
+        <h3>קטרגל</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+
+      <div class="regulation-card">
+        <img src="skin/design/sports/sup.jpg" alt="סאפ תחרויות">
+        <h3>סאפ תחרויות</h3>
+        <a href="#" class="btn">הצג תקנון</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="regulationModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <div id="modalContent">
+        <p>תוכן התקנון יוצג כאן...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mock-footer">
+    <div class="container footer-inner">
+      <div class="col">כתובתינו: רח' חורי 2, חיפה</div>
+      <div class="col">טלפון: 04-8620820</div>
+      <div class="col">דוא"ל: office@mavoda-haifa.org.il</div>
+      <div class="col">רכז: דוד כהן - 050-1234567</div>
+    </div>
+  </footer>
+
+  <script>
+    const sportMap = {
+      'כדורגל': 'soccer.html',
+      'כדורסל': 'basketball.html',
+      'כדורעף': 'volleyball.html',
+      'כדורשת': 'handball.html',
+      'טניס': 'tennis.html',
+      'שחייה': 'swimming.html',
+      'ריצה': 'running.html',
+      'אופני הרים': 'mountainbike.html',
+      'פדל': 'padel.html',
+      'פינג פונג': 'pingpong.html',
+      'באולינג': 'bowling.html',
+      'סנוקר': 'snooker.html',
+      'שחמט': 'backgammon.html',
+      'קשתות': 'archery.html',
+      'קטרגל': 'curling.html',
+      'סאפ': 'sup.html'
+    };
+
+    document.querySelector('.search').addEventListener('change', function() {
+      const sport = this.value.trim();
+      if (sportMap[sport]) {
+        window.location.href = sportMap[sport];
+      }
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('regulationModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const closeBtn = document.getElementsByClassName('close')[0];
+
+    // Sample regulations content
+    const regulations = {
+      'כדורגל': {
+        title: 'תקנון כדורגל',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>המשחק מתנהל על פי חוקי FIFA הבינלאומיים.</p>
+          <h3>זכאות השתתפות</h3>
+          <p>כל שחקן מעל גיל 16 רשאי להשתתף בליגות הבוגרים.</p>
+          <h3>כללי התנהגות</h3>
+          <p>איסור על אלימות, קללות והתנהגות לא ספורטיבית.</p>
+        `
+      },
+      'כדורסל': {
+        title: 'תקנון כדורסל',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>המשחק מתנהל על פי חוקי FIBA.</p>
+          <h3>זמני משחק</h3>
+          <p>כל משחק נמשך 4 רבעים של 10 דקות כל אחד.</p>
+          <h3>חוקי עבירות</h3>
+          <p>5 עבירות לשחקן = הוצאה מהמשחק.</p>
+        `
+      },
+      'כדורעף': {
+        title: 'תקנון כדורעף',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק עד 3 סטים, כל סט עד 25 נקודות.</p>
+          <h3>חוקי ההגשה</h3>
+          <p>כל קבוצה רשאית לבצע 3 מגעים בכדור.</p>
+        `
+      },
+      'כדורשת': {
+        title: 'תקנון כדורשת',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק בין שתי קבוצות של 7 שחקנים כל אחת.</p>
+          <h3>זמני משחק</h3>
+          <p>2 מחציות של 30 דקות כל אחת.</p>
+        `
+      },
+      'טניס': {
+        title: 'תקנון טניס',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק עד 3 סטים, כל סט עד 6 משחקונים.</p>
+          <h3>חוקי הניקוד</h3>
+          <p>0, 15, 30, 40, משחקון.</p>
+        `
+      },
+      'שחייה': {
+        title: 'תקנון שחייה',
+        content: `
+          <h3>כללי התחרות</h3>
+          <p>תחרויות על פי תקני FINA.</p>
+          <h3>סגנונות שחייה</h3>
+          <p>חופשי, גב, חזה, פרפר.</p>
+        `
+      },
+      'ריצה': {
+        title: 'תקנון ריצה',
+        content: `
+          <h3>כללי התחרות</h3>
+          <p>מרוצים למרחקים שונים.</p>
+          <h3>חוקי הזינוק</h3>
+          <p>איסור זינוק מוקדם.</p>
+        `
+      },
+      'אופני הרים': {
+        title: 'תקנון אופני הרים',
+        content: `
+          <h3>כללי הבטיחות</h3>
+          <p>חובה על קסדה ואביזרי בטיחות.</p>
+          <h3>מסלולי הרכיבה</h3>
+          <p>מסלולים מסומנים בלבד.</p>
+        `
+      },
+      'פדל': {
+        title: 'תקנון פדל',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק דומה לטניס אך עם קירות.</p>
+          <h3>חוקי הניקוד</h3>
+          <p>עד 3 סטים, כל סט עד 6 משחקונים.</p>
+        `
+      },
+      'טניס שולחן': {
+        title: 'תקנון טניס שולחן',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק עד 11 נקודות למשחקון.</p>
+          <h3>חוקי ההגשה</h3>
+          <p>הגשה לסירוגין כל 2 נקודות.</p>
+        `
+      },
+      'באולינג': {
+        title: 'תקנון באולינג',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>10 פריימים למשחק, 2 זריקות לכל פריימ.</p>
+          <h3>חוקי הסטרייק</h3>
+          <p>הפלת כל 10 הפינים בזריקה אחת.</p>
+        `
+      },
+      'סנוקר': {
+        title: 'תקנון סנוקר',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק על שולחן עם 21 כדורים.</p>
+          <h3>חוקי הניקוד</h3>
+          <p>צבעים שונים עם ערכי נקודות שונים.</p>
+        `
+      },
+      'שש בש': {
+        title: 'תקנון שש בש',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק אסטרטגיה עם קוביות.</p>
+          <h3>חוקי התנועה</h3>
+          <p>הזזת כלים לפי מספר הקוביות.</p>
+        `
+      },
+      'ירי ספורטיבי': {
+        title: 'תקנון ירי ספורטיבי',
+        content: `
+          <h3>כללי הבטיחות</h3>
+          <p>חובה על משקפי מגן ואטמי אוזניים.</p>
+          <h3>חוקי התחרות</h3>
+          <p>ירי למרחקים קבועים.</p>
+        `
+      },
+      'קטרגל': {
+        title: 'תקנון קטרגל',
+        content: `
+          <h3>כללי המשחק</h3>
+          <p>משחק קבוצתי על מגרש מיוחד.</p>
+          <h3>חוקי הציוד</h3>
+          <p>מגלשיים ומחבטים מיוחדים.</p>
+        `
+      },
+      'סאפ תחרויות': {
+        title: 'תקנון סאפ תחרויות',
+        content: `
+          <h3>כללי התחרות</h3>
+          <p>גלישת עמידה על גלשן.</p>
+          <h3>חוקי הבטיחות</h3>
+          <p>חגורת הצלה חובה.</p>
+        `
+      }
+    };
+
+    // Add click event to all regulation buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const sportName = this.parentElement.querySelector('h3').textContent;
+        const regulation = regulations[sportName];
+        
+        if (regulation) {
+          modalTitle.textContent = regulation.title;
+          modalContent.innerHTML = regulation.content;
+          modal.style.display = 'block';
+        }
+      });
+    });
+
+    // Close modal when clicking X
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
