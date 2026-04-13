@@ -66,10 +66,10 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .hero-title{font-size:36px;margin:0 0 8px;font-weight:700;line-height:1.2}
 .hero-lead{font-size:18px;margin:0;font-weight:400;opacity:0.95}
 
-.leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px;padding:24px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:80px;padding:24px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
 .league-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;border-radius:12px;background:#f8f9fa;cursor:pointer;transition:all 0.3s ease;text-align:center;position:relative}
 .league-category:hover{background:#e8f1f5;transform:translateY(-3px);box-shadow:0 6px 16px rgba(11,102,255,0.18)}
-.league-category img{width:100px;height:100px;object-fit:cover;border-radius:10px}
+.league-category img{width: 50px;;height:50px;object-fit:fill;border-radius:10px}
 .league-category span{font-size:14px;font-weight:600;color:#1f2937;line-height:1.4}
 .dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:none;flex-direction:column;min-width:180px;z-index:100;margin-top:8px}
 .league-category.active .dropdown-menu{display:flex}
@@ -93,6 +93,32 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .sidebar-section .more{display:inline-block;margin-top:12px;color:#0b66ff;text-decoration:none;font-weight:600;font-size:14px;transition:color 0.3s ease;align-self:flex-start}
 .sidebar-section .more:hover{color:#0050d8}
 
+.left-column{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);display:flex;flex-direction:column}
+.notices-scroll {
+  height: 400px; /* גובה הקונטיינר */
+  overflow: hidden; /* מסתיר את מה שיוצא מהגבולות */
+  position: relative;
+  background: #fff;
+}
+
+.notices-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  animation: scroll-down 15s linear infinite;
+}
+
+/* הגדרת האנימציה */
+@keyframes scroll-down {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* עצירת התנועה במעבר עכבר */
+.notices-scroll:hover .notices-wrapper {
+  animation-play-state: paused;
+}
 .important-notices .notices-scroll{flex:1;max-height:400px;overflow-y:auto;padding-right:8px}
 .important-notices .notices-scroll::-webkit-scrollbar{width:6px}
 .important-notices .notices-scroll::-webkit-scrollbar-track{background:#f0f0f0;border-radius:10px}
