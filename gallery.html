@@ -6,6 +6,52 @@
   <title>גלריות — בית ספורט</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="skin/sport5_mockup.css">
+  <style>    
+    .design-gallery-section {
+      margin: 40px 0;
+    }
+    .design-gallery-section h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 30px;
+    }
+    .design-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr); /* 6 תמונות בשורה */
+      gap: 15px; /* רווח בין התמונות */
+    }
+    .design-gallery-grid img {
+      width: 100%; /* התמונה תמלא את רוחב תא הגריד */
+      aspect-ratio: 1 / 1; /* Makes the image a perfect square */
+      object-fit: cover; /* Ensures the image covers the square area, cropping if necessary */
+      border-radius: 8px; /* פינות מעוגלות לתמונות */
+      display: block;
+    }
+
+    /* התאמות רספונסיביות */
+    @media (max-width: 1200px) {
+      .design-gallery-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    @media (max-width: 900px) {
+      .design-gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .design-gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .design-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Moving Strip -->
@@ -62,26 +108,6 @@
   </header>
 
   <main class="container main-grid">
-    <section class="hero">
-      <img src="skin/design/top_pic00.jpg" alt="כותרת" class="hero-img">
-      <div class="hero-overlay">
-        <h1 class="hero-title">גלריות תמונות</h1>
-        <p class="hero-lead">אוסף תמונות מן האירועים השונים</p>
-      </div>
-    </section>
-
-    <aside class="side-articles">
-      <h3>גלריות אחרונות</h3>
-      <div class="side-item">
-        <img src="skin/design/444.jpg" alt=""/>
-        <div class="side-text"><strong>משחק בכדורגל</strong><br>תמונות מהמשחק האחרון.</div>
-      </div>
-      <div class="side-item">
-        <img src="skin/design/555.jpg" alt=""/>
-        <div class="side-text"><strong>אימון הקבוצה</strong><br>תמונות מהאימון.</div>
-      </div>
-      <a class="more" href="#">עוד גלריות</a>
-    </aside>
 
     <section class="cards">
       <article class="card">

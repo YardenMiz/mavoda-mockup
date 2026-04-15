@@ -43,10 +43,14 @@
       position: absolute;
       top: 0;
       width: 100%;
-      animation: scroll-y 15s linear infinite;
+      animation: scroll-y 40s linear infinite; /* מהירות איטית וחלקה יותר */
     }
     .notices-wrapper:hover {
       animation-play-state: paused; /* עצירת הגלילה במעבר עכבר */
+    }
+    .notices-group {
+      display: flex;
+      flex-direction: column;
     }
     .notice-set {
       display: flex;
@@ -55,7 +59,7 @@
       padding-bottom: 15px;
     }
     @keyframes scroll-y {
-      0% { transform: translateY(calc(-100% / 3)); }
+      0% { transform: translateY(-50%); }
       100% { transform: translateY(0); }
     }
     .notice-item {
@@ -220,6 +224,13 @@
         </a>
 
       </div>
+      <div class="league-category" data-sport="שחמט">
+        <a href="chess.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:14px;width:100%">
+          <img src="skin/design/sports/chess.jpg" alt="שחמט">
+          <span>שחמט</span>
+        </a>
+
+      </div>
       <div class="league-category" data-sport="שש בש">
         <a href="backgammon.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:14px;width:100%">
           <img src="skin/design/sports/backgammon.jpg" alt="שש בש">
@@ -267,6 +278,7 @@
         
 <div class="notices-scroll">
   <div class="notices-wrapper">
+    <div class="notices-group">
     <div class="notice-set">
       <div class="notice-item">
         <strong>עדכון חשוב</strong>
@@ -333,6 +345,76 @@
       <div class="notice-item">
         <strong>עדכון לוח הציונים</strong>
         <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
+      </div>
+    </div>
+    </div>
+    <!-- שכפול מדויק של הקבוצה הראשונה ליצירת לולאה אינסופית הרמטית -->
+    <div class="notices-group" aria-hidden="true">
+      <div class="notice-set">
+        <div class="notice-item">
+          <strong>עדכון חשוב</strong>
+          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
+        </div>
+        <div class="notice-item">
+          <strong>רישום חדש סגור</strong>
+          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
+        </div>
+        <div class="notice-item">
+          <strong>תחרות מתוכננת</strong>
+          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
+        </div>
+        <div class="notice-item">
+          <strong>תרומה למועדון</strong>
+          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
+        </div>
+        <div class="notice-item">
+          <strong>עדכון לוח הציונים</strong>
+          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
+        </div>
+      </div>
+      <div class="notice-set">
+        <div class="notice-item">
+          <strong>עדכון חשוב</strong>
+          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
+        </div>
+        <div class="notice-item">
+          <strong>רישום חדש סגור</strong>
+          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
+        </div>
+        <div class="notice-item">
+          <strong>תחרות מתוכננת</strong>
+          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
+        </div>
+        <div class="notice-item">
+          <strong>תרומה למועדון</strong>
+          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
+        </div>
+        <div class="notice-item">
+          <strong>עדכון לוח הציונים</strong>
+          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
+        </div>
+      </div>
+      <div class="notice-set">
+        <div class="notice-item">
+          <strong>עדכון חשוב</strong>
+          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
+        </div>
+        <div class="notice-item">
+          <strong>רישום חדש סגור</strong>
+          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
+        </div>
+        <div class="notice-item">
+          <strong>תחרות מתוכננת</strong>
+          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
+        </div>
+        <div class="notice-item">
+          <strong>תרומה למועדון</strong>
+          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
+        </div>
+        <div class="notice-item">
+          <strong>עדכון לוח הציונים</strong>
+          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
+        </div>
       </div>
     </div>
   </div>
@@ -459,7 +541,8 @@
       'פינג פונג': 'pingpong.html',
       'באולינג': 'bowling.html',
       'סנוקר': 'snooker.html',
-      'שחמט': 'backgammon.html',
+      'שחמט': 'chess.html',
+      'שש בש': 'backgammon.html',
       'קשתות': 'archery.html',
       'קטרגל': 'curling.html',
       'סאפ': 'sup.html'
