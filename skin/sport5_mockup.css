@@ -1,7 +1,7 @@
 /* Minimal mockup stylesheet to approximate sport5.co.il look */
 html{zoom:0.75}
 *{box-sizing:border-box}
-body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;padding-top:38px}
+body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;padding-top:38px;padding-bottom:57px}
 
 /* Moving Strip Animation */
 @keyframes scroll {
@@ -57,20 +57,21 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .main-nav a{color:#fff;text-decoration:none;padding:10px 14px;font-weight:600;border-radius:6px;transition:all 0.3s ease;font-size:15px}
 .main-nav a:hover{background:rgba(255,255,255,0.12);color:#e8f0ff}
 .header-actions{text-align:center}
-.header-actions .search{width:150px;background:#3ac41e;border:1px solid #024616;color:#000;border-radius:20px;padding:8px 12px;font-size:13px}
-.header-actions .search option{color:#000;background:#fff}
-.container.main-grid, main.container { }
-
-.hero{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);margin-top:24px;margin-bottom:30px}
-.hero-img{width:100%;height:220px;object-fit:cover;display:block}
-.hero-overlay{position:absolute;left:50%;transform:translateX(-50%);bottom:28px;color:#fff;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,0.7);background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%);padding:16px 0;width:calc(100% - 48px)}
+.header-actions .search{width:150px;background:#3ac41e;border:1px solid #024616;color:#000;border-radius:20px;padding:8px 12px;font-size:13px} /* */
+.header-actions .search option{color:#000;background:#fff} /* */
+.container.main-grid, main.container {
+  flex-grow: 1; /* מאפשר לתוכן הראשי לתפוס את כל השטח הפנוי */
+}
+.hero{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);margin-top:24px;margin-bottom:30px;}
+.hero-img{width:100%;height:220px;object-fit:cover;display:block;object-position: top;}
+.hero-overlay{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;color:#fff;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,0.7);background:linear-gradient(180deg, transparent 100%, rgba(0,0,0,0.4) 100%);padding:4px 0;width:calc(100% - 48px)}
 .hero-title{font-size:36px;margin:0 0 8px;font-weight:700;line-height:1.2}
 .hero-lead{font-size:18px;margin:0;font-weight:400;opacity:0.95}
 
-.leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:80px;padding:24px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
-.league-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;border-radius:12px;background:#f8f9fa;cursor:pointer;transition:all 0.3s ease;text-align:center;position:relative}
+.leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:40px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.league-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:10px;border-radius:12px;background:#f8f9fa;cursor:pointer;transition:all 0.3s ease;text-align:center;position:relative}
 .league-category:hover{background:#e8f1f5;transform:translateY(-3px);box-shadow:0 6px 16px rgba(11,102,255,0.18)}
-.league-category img{width: 50px;;height:50px;object-fit:fill;border-radius:10px}
+.league-category img{width: 60px;height:60px;object-fit:fill;border-radius:10px}
 .league-category span{font-size:14px;font-weight:600;color:#1f2937;line-height:1.4}
 .dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:none;flex-direction:column;min-width:180px;z-index:100;margin-top:8px}
 .league-category.active .dropdown-menu{display:flex}
@@ -129,7 +130,13 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .notice-item strong{display:block;color:#1f2937;font-size:14px;margin-bottom:6px}
 .notice-item p{margin:0;color:#4b5563;font-size:13px;line-height:1.4}
 
-.mock-footer{background:#0b1620;color:#cbd5e1;padding:28px 0;margin-top:40px;border-top:1px solid rgba(255,255,255,0.05)}
+.mock-footer{background:#0b1620;color:#cbd5e1;padding:28px 0;border-top:1px solid rgba(255,255,255,0.05);
+  position: fixed; /* מקבע את הפוטר לתחתית המסך */
+  bottom: 0; /* ממקם אותו בתחתית המסך */
+  left: 0; /* מיישר אותו לקצה השמאלי */
+  width: 100%; /* מבטיח שהוא נפרש על כל הרוחב */
+  z-index: 999; /* מבטיח שהוא יופיע מעל רוב התוכן, אך מתחת לסרגל הנע ולכותרת הדביקה */
+}
 .footer-inner{display:flex;justify-content:center;gap:40px;text-align:center;flex-wrap:wrap}
 .footer-inner .col{font-size:13px;color:#94a3b8}
 
@@ -147,7 +154,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 @media (max-width:620px){
   .leagues-categories{grid-template-columns:repeat(2,1fr);gap:16px;padding:16px}
   .league-category{padding:14px;gap:10px}
-  .league-category img{width:80px;height:80px}
+      .league-category img{width:70px;height:70px}
   .league-category span{font-size:12px}
   .three-columns{grid-template-columns:1fr}
   .main-nav{display:none}
@@ -157,25 +164,29 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
   .hero-lead{font-size:16px}
 }
 
-.news-articles {
-  margin: 40px 0;
-  padding: 0 16px;
+/* Styling for the News and Articles section when it's in the sidebar */
+.news-articles { /* Apply sidebar-like styling */
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 20px; /* Space from the section above */
 }
 
-.section-title {
-  font-size: 28px;
+.news-articles .section-title { /* Adjust title for sidebar */
+  font-size: 19px; /* Match sidebar h3 */
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 24px;
-  text-align: center;
+  margin-bottom: 16px; /* Match sidebar h3 */
+  text-align: right; /* Align title to the right for RTL */
 }
 
-.articles-grid {
+.news-articles .articles-grid { /* Adjust grid for sidebar */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: 1fr; /* Force single column in sidebar */
   gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none; /* Remove max-width constraint */
+  margin: 0; /* Remove auto margin */
 }
 
 .article-card {
@@ -238,15 +249,126 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 }
 
 @media (max-width: 768px) {
-  .articles-grid {
+  .news-articles .articles-grid { /* Ensure single column on smaller screens too */
     grid-template-columns: 1fr;
   }
   
-  .section-title {
+  .news-articles .section-title {
     font-size: 24px;
   }
   
+}
+
+/* Global Gallery Styles */
+.sports-galleries {
+  margin: 40px 0;
+}
+
+.sport-gallery {
+  margin-bottom: 40px; /* Space between different sport galleries */
+}
+
+.sports-galleries .section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Default for larger screens */
+  gap: 20px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e8e8e8;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Responsive adjustments for gallery grid */
+@media (max-width: 1200px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+}
   .article-card {
     padding: 16px;
+  }
+}
+
+/* Styling for external links section on the main page */
+.external-links-section {
+  margin-top: 20px; /* Space from the section above, reduced to bring it closer */
+  margin-bottom: 40px; /* Space before the footer */
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.external-links-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.external-link-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 25px;
+  background-image: url('design/327213644_1612965995798943_8657113124457048925_n.png'); /* Hero image as background */
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the background image */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 150px; /* Ensure a minimum width */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Add text shadow for readability */
+}
+
+.external-link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+/* Responsive adjustments for external links */
+@media (max-width: 620px) {
+  .external-links-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .external-link-item {
+    width: 80%; /* Make them wider on small screens */
   }
 }
