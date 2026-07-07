@@ -147,20 +147,12 @@
     <section class="sports-layout">
       <div class="right-column">
         <aside class="sidebar-section">
-        <h3>משחקים אחרונים</h3>
-        <div class="side-item">
-          <img src="skin/design/sec_bg.jpg" alt=""/>
-          <div class="side-text"><strong>מכבי חיפה vs הפועל ת"א</strong><br>יום שני, 20:45</div>
-        </div>
-        <div class="side-item">
-          <img src="skin/design/555.jpg" alt=""/>
-          <div class="side-text"><strong>בני יהודה vs בית"ר</strong><br>יום שלישי, 19:30</div>
-        </div>
-        <div class="side-item">
-          <img src="skin/design/sec_bg.jpg" alt=""/>
-          <div class="side-text"><strong>הפועל חיפה vs מכבי נתניה</strong><br>יום רביעי, 21:00</div>
-        </div>
-        <a class="more" href="#">כל המשחקים</a>
+          <h3>תמונות אקראיות</h3>
+          <div class="image-carousel">
+            <button class="carousel-btn prev-btn">←</button>
+            <img id="carousel-image" src="" alt="תמונה אקראית">
+            <button class="carousel-btn next-btn">→</button>
+          </div>
         </aside>
         <section class="news-articles">
           <h2 class="section-title">חדשות ומאמרים</h2>
@@ -462,33 +454,39 @@
     </div>
   </footer>
 
+  <script src="js/utils.js"></script>
+  <script src="js/common.js"></script>
   <script>
-    const sportMap = {
-      'כדורגל': 'soccer.html',
-      'כדורסל': 'basketball.html',
-      'כדורעף': 'volleyball.html',
-      'כדורשת': 'handball.html',
-      'טניס': 'tennis.html',
-      'שחייה': 'swimming.html',
-      'ריצה': 'running.html',
-      'אופני הרים': 'mountainbike.html',
-      'פאדל': 'padel.html',
-      'טניס שולחן': 'pingpong.html',
-      'באולינג': 'bowling.html',
-      'סנוקר': 'snooker.html',
-      'שחמט': 'chess.html',
-      'שש בש': 'backgammon.html',
-      'ירי ספורטיבי': 'archery.html',
-      'קטרגל': 'curling.html',
-      'סאפ': 'sup.html'
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = [
+        'skin/design/sec_bg.jpg',
+        'skin/design/555.jpg',
+        'skin/design/444.jpg'
+      ];
+      let currentIndex = 0;
+      const carouselImage = document.getElementById('carousel-image');
+      const prevBtn = document.querySelector('.prev-btn');
+      const nextBtn = document.querySelector('.next-btn');
 
-    document.querySelector('.search').addEventListener('change', function() {
-      const sport = this.value.trim();
-      if (sportMap[sport]) {
-        window.location.href = sportMap[sport];
+      function showImage(index) {
+        carouselImage.src = images[index];
       }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      }
+
+      // Initial display
+      showImage(currentIndex);
+
+      // Event listeners
+      prevBtn.addEventListener('click', prevImage);
+      nextBtn.addEventListener('click', nextImage);
     });
   </script>
-</body>
-</html>
