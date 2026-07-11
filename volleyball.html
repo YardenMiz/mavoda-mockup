@@ -186,61 +186,10 @@
   </style>
 </head>
 <body>
-  <!-- Moving Strip -->
-  <div class="moving-strip">
-    <div class="strip-content">
-      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
-      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
-      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
-      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
-      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
-      <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 15:30</span>
-      <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
-      <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
-      <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
-      <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
-    </div>
-  </div>
 
-  <header class="mock-header">
-    <div class="container header-inner">
-      <div class="logo-area">
-        <img src="skin/design/logo.png" alt="לוגו" class="logo">
-      </div>
-      <nav class="main-nav">
-        <a href="index.html">ראשי</a>
-        <a href="about.html">אודות</a>
-        <a href="regulations.html">תקנונים</a>
-        <a href="leagues.html">ליגות</a>
-        <a href="gallery.html">גלריות</a>
-        <a href="contact.html">צור קשר</a>
-      </nav>
-      <div class="header-actions">
-        <select class="search">
-          <option value="">חפש מקצוע...</option>
-          <option value="כדורגל">כדורגל</option>
-          <option value="כדורסל">כדורסל</option>
-          <option value="כדורעף">כדורעף</option>
-          <option value="כדורשת">כדורשת</option>
-          <option value="טניס">טניס</option>
-          <option value="שחייה">שחייה</option>
-          <option value="ריצה">ריצה</option>
-          <option value="אופני הרים">אופני הרים</option>
-          <option value="פאדל">פאדל</option>
-          <option value="טניס שולחן">טניס שולחן</option>
-          <option value="באולינג">באולינג</option>
-          <option value="סנוקר">סנוקר</option>
-          <option value="שחמט">שחמט</option>
-          <option value="שש בש">שש בש</option>
-          <option value="ירי ספורטיבי">ירי ספורטיבי</option>
-          <option value="קטרגל">קטרגל</option>
-          <option value="סאפ">סאפ</option>
-        </select>
-      </div>
-    </div>
-  </header>
+  
 
-  <main class="container">
+  <main class="container"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
     <a href="index.html" class="back-link">← חזרה לעמוד הבית</a>
 
     <div class="sport-detail-header">
@@ -369,15 +318,7 @@
         </p>
       </div>
     </div>
-  </main>
-
-  <footer class="mock-footer">
-    <div class="container footer-inner">
-      <div class="col">כתובתינו: רח' חורי 2, חיפה</div>
-      <div class="col">טלפון: 04-8620820</div>
-      <div class="col">דוא"ל: office@mavoda-haifa.org.il</div>
-    </div>
-  </footer>
+  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
 
   <script>
     const sportMap = {
@@ -407,6 +348,7 @@
       }
     });
   </script>
+  <script src="skin/moving-strip-loader.js"></script>
   <script>
     document.querySelectorAll('.tab-button').forEach(button => {
       button.addEventListener('click', function() {
@@ -424,5 +366,9 @@
       console.log('בחרת שנה: ' + this.value);
     });
   </script>
+    <script src="skin/moving-strip-loader.js"></script>
+   <script src="skin/footer-loader.js"></script>
+
+  <script src="skin/header-loader.js"></script>
 </body>
 </html>

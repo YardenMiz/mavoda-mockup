@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Load the moving strip
-  loadHTML('moving-strip-placeholder', 'skin/moving-strip.html');
+  // The moving strip is now statically included in all HTML files, so dynamic loading is not needed.
 
   // Initialize header scripts (e.g., search functionality)
   initializeHeaderScripts();
