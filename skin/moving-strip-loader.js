@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // If the page already manages a moving strip via a placeholder, do nothing
-  if (document.getElementById('moving-strip-placeholder')) return;
+  // If the page already includes a moving strip (static or placeholder), do nothing
+  if (document.getElementById('moving-strip-placeholder') || document.querySelector('.moving-strip')) return;
 
   // Fetch the moving strip HTML and insert it at the top of the <body>
   fetch('skin/moving-strip.html')

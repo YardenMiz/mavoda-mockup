@@ -58,16 +58,14 @@
       'סאפ': 'sup.html'
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchSelect = document.querySelector('.search');
-      if (searchSelect) {
-        searchSelect.addEventListener('change', function () {
-          const sport = this.value.trim();
-          if (sportMap[sport]) {
-            window.location.href = sportMap[sport];
-          }
-        });
-      }
-    });
+    const searchSelect = document.querySelector('.search');
+    if (searchSelect) {
+      searchSelect.addEventListener('change', function () {
+        const sport = this.value.trim();
+        if (sportMap[sport]) {
+          window.location.href = sportMap[sport];
+        }
+      });
+    }
   </script>
 </header>

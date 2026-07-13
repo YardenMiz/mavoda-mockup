@@ -97,34 +97,6 @@
     <div id="regulations" class="tab-content"><div class="regulations-text"><h3>כללי המשחק</h3><p>הטורנירים מנוהלים לפי כללי ATP ו-WTA. כל משחק מורכב משלוש סטות, והשחקן הראשון להגיע ל-6 משחקים בסט מנצח את הסט.</p><h3>דרישות השתתפות</h3><p>שחקנים חייבים להיות רשומים בפדרציה ולעמוד בדרישות גיל. דמי רישום משתנים לפי סוג הטורניר.</p></div></div>
   </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
   <script>
-    const sportMap = {
-      'כדורגל': 'soccer.html',
-      'כדורסל': 'basketball.html',
-      'כדורעף': 'volleyball.html',
-      'כדורשת': 'handball.html',
-      'טניס': 'tennis.html',
-      'שחייה': 'swimming.html',
-      'ריצה': 'running.html',
-      'אופני הרים': 'mountainbike.html',
-      'פאדל': 'padel.html',
-      'טניס שולחן': 'pingpong.html',
-      'באולינג': 'bowling.html',
-      'סנוקר': 'snooker.html',
-      'שחמט': 'chess.html',
-      'שש בש': 'backgammon.html',
-      'ירי ספורטיבי': 'archery.html',
-      'קטרגל': 'curling.html',
-      'סאפ': 'sup.html'
-    };
-
-    document.querySelector('.search').addEventListener('change', function() {
-      const sport = this.value.trim();
-      if (sportMap[sport]) {
-        window.location.href = sportMap[sport];
-      }
-    });
-  </script>
-  <script>
     document.querySelectorAll('.tab-button').forEach(button => {
       button.addEventListener('click', function() {
         const tabName = this.dataset.tab;

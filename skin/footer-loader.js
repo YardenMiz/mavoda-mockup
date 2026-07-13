@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       container.id = 'footer-placeholder';
       container.innerHTML = html;
       const body = document.body;
-      if (body.firstChild) body.insertBefore(container, body.firstChild);
-      else body.appendChild(container);
+      // Append footer at the end of the body to avoid changing header/strip order
+      body.appendChild(container);
     })
     .catch(err => {
       console.warn('footer-loader:', err);

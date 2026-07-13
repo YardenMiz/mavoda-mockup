@@ -1,30 +1,42 @@
 /* Minimal mockup stylesheet to approximate sport5.co.il look */
 html{zoom:1}
 *{box-sizing:border-box}
-body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;padding-top:38px;padding-bottom:57px;min-height:100vh;overflow-x:hidden}
+body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;min-height:100vh;overflow-x:hidden}
 
 /* Moving Strip Animation */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
-.moving-strip {
+.moving-strip{
   background: linear-gradient(90deg, #3ac41e 0%, #024616 100%);
-  color: #fff;
-  overflow: hidden;
-  padding: 10px 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1001;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color:#fff;
+  overflow:hidden;
+  padding:10px 0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1200;
 }
 
+.mock-header{
+  background:#0b1620;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  width:100%;
+  box-shadow:0 2px 12px rgba(0,0,0,0.1);
+  position:fixed;
+  top:56px; /* בדיוק מתחת לסטריפ הקבוע */
+  left:0;
+  z-index:1100;
+}
 .strip-content {
   display: flex;
+  height: 36px;
+  align-items: center;
   animation: scroll 30s linear infinite;
   width: 200%;
 }
@@ -42,11 +54,16 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 }
 
 .container{max-width:100%;margin:0 auto;padding:0 24px}
-.page-shell{display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr) minmax(180px,260px);gap:20px;align-items:start;padding:20px 24px 100px}
-.page-shell > .side-panel{background:linear-gradient(180deg,#ffffff 0%, #f7f7f7 100%);border:1px solid #e5e7eb;border-radius:14px;min-height:320px;box-shadow:0 2px 8px rgba(0,0,0,0.04);padding:16px}
-.page-shell > .side-panel .ad-placeholder{display:flex;align-items:center;justify-content:center;height:220px;border:1px dashed #cbd5e1;border-radius:10px;color:#64748b;font-size:14px;font-weight:600;background:#fff}
+.page-shell{
+  display:grid;
+  grid-template-columns:minmax(180px,260px) minmax(0,1fr) minmax(180px,260px);
+  gap:20px;
+  align-items:start;
+  padding:20px 24px 100px;
+  margin-top:132px; /* 56px (סטריפ) + 76px (גובה ההדר לפי height:76px בinner) */
+}.page-shell > .side-panel{background:linear-gradient(180deg,#ffffff 0%, #f7f7f7 100%);border:1px solid #e5e7eb;border-radius:14px;min-height:320px;box-shadow:0 2px 8px rgba(0,0,0,0.04);padding:16px}
+.page-shell > .side-panel .ad-placeholder{display:flex;align-items:center;justify-content:center;height:220px;border:1px dashed #cbd5e1;border-radius:10px;color:#64748b;font-size:14px;font-weight:600;background:#fff} /* */
 .page-shell > .main-content{min-width:0}
-.mock-header{background:#0b1620;color:#fff;position:sticky;top:38px;z-index:1000;display:flex;justify-content:center;width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.1)}
 .header-inner {
   display: flex;
   align-items: center;
@@ -72,21 +89,34 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .hero-title{font-size:36px;margin:0 0 8px;font-weight:700;line-height:1.2}
 .hero-lead{font-size:18px;margin:0;font-weight:400;opacity:0.95}
 
-.leagues-categories{display:grid;grid-template-columns:repeat(5,1fr);gap: 20px 12px;;margin-bottom:32px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);width:100%}
-.league-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px;border-radius:10px;background:#f8f9fa;cursor:pointer;transition:all 0.3s ease;text-align:center;position:relative;min_height:72px}
-.league-category:hover{background:#e8f1f5;transform:translateY(-2px);box-shadow:0 4px 12px rgba(11,102,255,0.12)}
-.league-category img{width:72px;height:72px;object-fit:cover;border-radius:10px}
-.league-category span{font-size:13px;font-weight:600;color:#1f2937;line-height:1.3}
-.dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);display:none;flex-direction:column;min-width:180px;z-index:100;margin-top:8px}
-.league-category.active .dropdown-menu{display:flex}
-.dropdown-menu a{padding:12px 16px;color:#1f2937;text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s ease;border-bottom:1px solid #f0f0f0}
-.dropdown-menu a:last-child{border-bottom:none}
-.dropdown-menu a:hover{background:#f5f5f5;color:#0b66ff}
+.leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);align-content:start;gap:22px;margin-bottom:32px;padding:22px;background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);width:100%;}
+.league-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 10px;
+    border-radius: 14px;
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}.league-category:hover,.league-category:focus-within{background:#e8f1f5;transform:translateY(-3px);box-shadow:0 6px 16px rgba(11,102,255,0.18);border-color:#0b66ff}
+.league-category img{width:96px;height:96px;object-fit:cover;border-radius:12px}
+.league-category span{font-size:18px;font-weight:700;color:#111827;line-height:1.3}
+.league-category a:focus-visible{outline:3px solid #0b66ff;outline-offset:4px;border-radius:14px}
+
 
 .two-columns{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
 
 @media (max-width:1024px){.leagues-categories{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:680px){.leagues-categories{grid-template-columns:1fr}.two-columns{grid-template-columns:1fr}}
+@media (max-width:680px){.leagues-categories{grid-template-columns:repeat(2,1fr)}.two-columns{grid-template-columns:1fr}}
 
 .two-columns{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:40px}
 
@@ -134,19 +164,16 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .notice-item strong{display:block;color:#1f2937;font-size:14px;margin-bottom:6px}
 .notice-item p{margin:0;color:#4b5563;font-size:13px;line-height:1.4}
 
-.mock-footer{background:#0b1620;color:#cbd5e1;padding:28px 0;border-top:1px solid rgba(255,255,255,0.05);
-  position: fixed; /* מקבע את הפוטר לתחתית המסך */
-  bottom: 0; /* ממקם אותו בתחתית המסך */
-  left: 0; /* מיישר אותו לקצה השמאלי */
-  width: 100%; /* מבטיח שהוא נפרש על כל הרוחב */
-  z-index: 999; /* מבטיח שהוא יופיע מעל רוב התוכן, אך מתחת לסרגל הנע ולכותרת הדביקה */
+.mock-footer{
+  background:#0b1620;
+  color:#cbd5e1;
+  padding:28px 0;
+  border-top:1px solid rgba(255,255,255,0.05);
+  /* position:fixed הוסר - עכשיו הפוטר בזרימה רגילה */
 }
 .footer-inner{display:flex;justify-content:center;gap:40px;text-align:center;flex-wrap:wrap}
 .footer-inner .col{font-size:13px;color:#94a3b8}
 
-@media (max-width:1200px){
-  .leagues-categories{grid-template-columns:repeat(4,1fr)}
-}
 @media (max-width:900px){
   .three-columns{grid-template-columns:1fr}
   .page-shell{grid-template-columns:1fr;gap:16px;padding:16px 16px 100px}
@@ -160,9 +187,9 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 @media (max-width:620px){
   .page-shell{padding:12px 12px 100px}
   .leagues-categories{grid-template-columns:repeat(2,1fr);gap:16px;padding:16px}
-  .league-category{padding:14px;gap:10px}
-      .league-category img{width:90px;height:90px}
-  .league-category span{font-size:12px}
+  .league-category{padding:16px 10px;gap:10px}
+      .league-category img{width:84px;height:84px}
+  .league-category span{font-size:16px}
   .three-columns{grid-template-columns:1fr}
   .main-nav{display:none}
   .header-actions .search{width:100%;max-width:200px}

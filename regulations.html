@@ -242,33 +242,6 @@
   </div>
 
   <script>
-    const sportMap = {
-      'כדורגל': 'soccer.html',
-      'כדורסל': 'basketball.html',
-      'כדורעף': 'volleyball.html',
-      'כדורשת': 'handball.html',
-      'טניס': 'tennis.html',
-      'שחייה': 'swimming.html',
-      'ריצה': 'running.html',
-      'אופני הרים': 'mountainbike.html',
-      'פאדל': 'padel.html',
-      'טניס שולחן': 'pingpong.html',
-      'באולינג': 'bowling.html',
-      'סנוקר': 'snooker.html',
-      'שחמט': 'chess.html',
-      'שש בש': 'backgammon.html',
-      'ירי ספורטיבי': 'archery.html',
-      'קטרגל': 'curling.html',
-      'סאפ': 'sup.html'
-    };
-
-    document.querySelector('.search').addEventListener('change', function() {
-      const sport = this.value.trim();
-      if (sportMap[sport]) {
-        window.location.href = sportMap[sport];
-      }
-    });
-
     // Modal functionality
     const modal = document.getElementById('regulationModal');
     const modalTitle = document.getElementById('modalTitle');
