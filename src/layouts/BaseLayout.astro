@@ -1,0 +1,42 @@
+---
+import Header from '../components/Header.astro';
+import MovingStrip from '../components/MovingStrip.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="skin/sport5_mockup.css" />
+  <link rel="icon" type="image/x-icon" href="skin/design/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="skin/design/favicon-32.png" />
+  <link rel="apple-touch-icon" href="skin/design/apple-touch-icon.png" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7H73T59SQH"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7H73T59SQH');
+  </script>
+  <slot name="head" />
+</head>
+<body>
+  <Header />
+  <MovingStrip />
+  <slot />
+  <Footer />
+</body>
+</html>
