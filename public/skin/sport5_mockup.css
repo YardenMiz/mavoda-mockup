@@ -73,7 +73,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
   padding: 0 24px;
   width: 100%;
 }
-.logo{height:44px;width:auto}
+.logo{height:58px;width:auto}
 .main-nav{display:flex;gap:16px;margin:0;padding:0;list-style:none}
 .main-nav a{color:#fff;text-decoration:none;padding:10px 14px;font-weight:600;border-radius:6px;transition:all 0.3s ease;font-size:15px}
 .main-nav a:hover{background:rgba(255,255,255,0.12);color:#e8f0ff}
@@ -86,7 +86,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 .hero{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.1);margin-top:0;margin-bottom:24px;width:100%;}
 .hero-img{width:100%;height:280px;object-fit:cover;display:block;object-position: top;}
 .hero-overlay{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;color:#fff;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,0.7);background:linear-gradient(180deg, transparent 100%, rgba(0,0,0,0.4) 100%);padding:4px 0;width:calc(100% - 48px)}
-.hero-title{font-size:36px;margin:0 0 8px;font-weight:700;line-height:1.2}
+.hero-title{font-size:42px;margin:0 0 8px;font-weight:700;line-height:1.2}
 .hero-lead{font-size:18px;margin:0;font-weight:400;opacity:0.95}
 
 .leagues-categories{display:grid;grid-template-columns:repeat(4,1fr);align-content:start;gap:22px;margin-bottom:32px;padding:22px;background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);width:100%;}
@@ -194,7 +194,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
   .main-nav{display:none}
   .header-actions .search{width:100%;max-width:200px}
   .strip-item{padding:0 20px;font-size:13px}
-  .hero-title{font-size:28px}
+  .hero-title{font-size:32px}
   .hero-lead{font-size:16px}
 }
 
@@ -462,7 +462,7 @@ body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2
 
 /* Sport detail pages (soccer.html, basketball.html, chess.html, etc.) — shared by all sport pages */
 .sport-detail-header { background: linear-gradient(135deg, #3ac41e 0%, #024616 100%); color: #fff; padding: 40px 0; text-align: center; margin-top: 24px; border-radius: 12px; margin-bottom: 30px; }
-.sport-detail-header h1 { margin: 0; font-size: 36px; font-weight: 700; }
+.sport-detail-header h1 { margin: 0; font-size: 42px; font-weight: 700; }
 .tabs-nav { display: flex; gap: 0; margin-bottom: 30px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 .tabs-nav button { flex: 1; padding: 16px 20px; border: none; background: #f8f9fa; color: #1f2937; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s ease; font-family: Rubik, Arial, sans-serif; border-bottom: 3px solid transparent; }
 .tabs-nav button:hover { background: #e8f1f5; }

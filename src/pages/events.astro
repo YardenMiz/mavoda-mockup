@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title={`אירועים — העמותה לספורט`} description={`אירועים וימים מרוכזים של העמותה לספורט מרחב חיפה והצפון.`}>
+<Fragment slot="head">
+  <style>
+    .events-section {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    .events-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .events-content h2 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .events-content p {
+      line-height: 1.6;
+      color: #4b5563;
+    }
+  </style>
+</Fragment>
+
+<main class="container main-grid"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
+    <section class="hero">
+      <img src="skin/design/hero.jpg" alt="כותרת" class="hero-img" width="851" height="315">
+      <div class="hero-overlay">
+        <h1 class="hero-title">אירועים</h1>
+        <p class="hero-lead">ימים מרוכזים, טורנירים ואירועי העמותה</p>
+      </div>
+    </section>
+
+    <div class="events-section">
+      <div class="events-content">
+        <h2>בקרוב</h2>
+        <p>פרטים על האירועים הקרובים של העמותה יתעדכנו כאן בהמשך.</p>
+      </div>
+    </div>
+
+  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+</BaseLayout>
