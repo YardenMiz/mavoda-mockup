@@ -50,6 +50,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       justify-content: space-between;
       align-items: center;
     }
+    .sport-select-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+    .sport-select-row label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    #sport-select {
+      padding: 0.65rem 0.9rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: #fff;
+      cursor: pointer;
+      max-width: 320px;
+    }
+    #sport-select:focus {
+      outline: none;
+      border-color: #3ac41e;
+      box-shadow: 0 0 0 3px rgba(58, 196, 30, 0.15);
+    }
     .admin-form {
       display: flex;
       flex-direction: column;
@@ -87,7 +112,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       flex-direction: column;
       gap: 0.5rem;
     }
-    .admin-list li {
+    .admin-list :global(li) {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -96,7 +121,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border-radius: 6px;
       padding: 0.5rem 0.75rem;
     }
-    .admin-list li button {
+    .admin-list :global(li button) {
       background: #d33;
       color: #fff;
       border: none;
@@ -126,7 +151,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       color: #666;
       margin-top: -0.5rem;
     }
-    .reg-section {
+    :global(.reg-section) {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -135,15 +160,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       padding: 0.75rem;
       margin-bottom: 0.75rem;
     }
-    .reg-section input,
-    .reg-section textarea {
+    :global(.reg-section input),
+    :global(.reg-section textarea) {
       padding: 0.5rem 0.6rem;
       border: 1px solid #ddd;
       border-radius: 6px;
       font-family: inherit;
       font-size: 1rem;
     }
-    .reg-section button {
+    :global(.reg-title) {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    :global(.reg-content) {
+      margin-top: 0.5rem;
+    }
+    :global(.reg-section button) {
       background: #d33;
       color: #fff;
       border: none;
@@ -183,8 +215,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h1>ניהול תוכן ענפים</h1>
           <button type="button" id="logout-btn">התנתק</button>
         </div>
-        <label for="sport-select">בחר ענף לעריכה:</label>
-        <select id="sport-select"></select>
+        <div class="sport-select-row">
+          <label for="sport-select">בחר ענף לעריכה:</label>
+          <select id="sport-select"></select>
+        </div>
         <p id="admin-status"></p>
       </div>
 
@@ -315,11 +349,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       row.className = 'reg-section';
 
       const titleInput = document.createElement('input');
+      titleInput.className = 'reg-title';
       titleInput.placeholder = 'כותרת הסעיף (למשל: כללי המשחק)';
       titleInput.value = section.title;
       titleInput.addEventListener('input', () => { regSections[i].title = titleInput.value; });
 
       const contentTextarea = document.createElement('textarea');
+      contentTextarea.className = 'reg-content';
       contentTextarea.rows = 3;
       contentTextarea.placeholder = 'תוכן הסעיף';
       contentTextarea.value = section.content;
@@ -383,7 +419,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     renderRegSections();
   }
 
-  function renderList(ul, rows, label, table) {
+  function renderList(ul, rows, label, table, onDeleted = () => loadSport(currentSlug)) {
     ul.innerHTML = '';
     for (const row of rows) {
       const li = document.createElement('li');
@@ -394,7 +430,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       btn.textContent = 'מחק';
       btn.addEventListener('click', async () => {
         await supabase.from(table).delete().eq('id', row.id);
-        await loadSport(currentSlug);
+        await onDeleted();
         setStatus('נמחק');
       });
       li.append(span, btn);

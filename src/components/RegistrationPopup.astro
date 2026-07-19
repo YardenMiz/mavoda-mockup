@@ -16,33 +16,30 @@
 <style>
   .signup-popup {
     position: fixed;
-    inset: 0;
+    bottom: 20px;
+    left: 20px;
     z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
+    width: calc(100% - 40px);
+    max-width: 320px;
   }
   .signup-popup[hidden] {
     display: none;
   }
   .signup-popup-box {
     background: #fff;
-    padding: 32px;
+    padding: 24px 20px 20px;
     border-radius: 16px;
-    width: 90%;
-    max-width: 420px;
     position: relative;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   }
   .signup-popup-close {
     position: absolute;
-    top: 12px;
-    left: 16px;
+    top: 8px;
+    left: 10px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1;
     cursor: pointer;
     color: #888;
@@ -90,26 +87,43 @@
 <script>
   import { supabase } from '../lib/supabase.js';
 
-  const SEEN_KEY = 'mavoda_signup_popup_seen';
+  // Tracked per-tab (sessionStorage) rather than forever (localStorage): a
+  // fresh site visit should always show the popup once, then it keeps
+  // reappearing every REAPPEAR_MS while that visit continues, even across
+  // page navigations within the same tab.
+  const DISMISSED_AT_KEY = 'mavoda_signup_popup_dismissed_at';
+  const REAPPEAR_MS = 10 * 60 * 1000;
+
   const popup = document.getElementById('signup-popup');
   const form = document.getElementById('signup-popup-form');
   const status = document.getElementById('signup-popup-status');
   const closeBtn = popup.querySelector('.signup-popup-close');
+  let reappearTimer;
 
-  function dismiss() {
-    localStorage.setItem(SEEN_KEY, '1');
-    popup.hidden = true;
-  }
-
-  if (!localStorage.getItem(SEEN_KEY)) {
+  function show() {
     popup.hidden = false;
   }
 
-  closeBtn.addEventListener('click', dismiss);
+  function scheduleReappear(delay) {
+    clearTimeout(reappearTimer);
+    reappearTimer = setTimeout(show, delay);
+  }
 
-  popup.addEventListener('click', (event) => {
-    if (event.target === popup) dismiss();
-  });
+  function dismiss() {
+    popup.hidden = true;
+    sessionStorage.setItem(DISMISSED_AT_KEY, String(Date.now()));
+    scheduleReappear(REAPPEAR_MS);
+  }
+
+  const dismissedAt = Number(sessionStorage.getItem(DISMISSED_AT_KEY) || 0);
+  const elapsed = Date.now() - dismissedAt;
+  if (!dismissedAt || elapsed >= REAPPEAR_MS) {
+    show();
+  } else {
+    scheduleReappear(REAPPEAR_MS - elapsed);
+  }
+
+  closeBtn.addEventListener('click', dismiss);
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !popup.hidden) dismiss();
@@ -129,6 +143,7 @@
     });
 
     if (error) {
+      console.error('signup popup insert error:', error);
       status.textContent = 'שגיאה בשליחה, נסו שוב מאוחר יותר.';
       submitBtn.disabled = false;
       return;

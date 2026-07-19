@@ -111,6 +111,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
 
     if (error) {
+      console.error('contact form insert error:', error);
       status.textContent = 'שגיאה בשליחה, נסו שוב מאוחר יותר.';
       submitBtn.disabled = false;
       return;
