@@ -89,6 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <img id="carousel-image" src="" alt="תמונה אקראית">
             <button class="carousel-btn next-btn" aria-label="תמונה הבאה">→</button>
           </div>
+          <div id="site-gallery-admin"></div>
         </aside>
         <section class="news-articles">
           <h2 class="section-title">חדשות ומאמרים</h2>
@@ -380,13 +381,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
 
 
-<script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      const images = [
+<script>
+    import { supabase } from '../lib/supabase.js';
+    import { getEditContext, mountSiteGalleryEditControls } from '../lib/inlineEditor.js';
+
+    async function loadSiteGalleryRows() {
+      return supabase.from('site_gallery').select('*').order('created_at', { ascending: false });
+    }
+
+    async function refreshSiteGalleryAdmin() {
+      const adminContainer = document.getElementById('site-gallery-admin');
+      if (!adminContainer) return;
+      adminContainer.innerHTML = '';
+      const { data } = await loadSiteGalleryRows();
+      mountSiteGalleryEditControls(adminContainer, data || [], refreshSiteGalleryAdmin);
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const fallbackImages = [
         'skin/design/sec_bg.jpg',
         'skin/design/555.jpg',
         'skin/design/444.jpg'
       ];
+
+      let images = fallbackImages;
+      const { data } = await loadSiteGalleryRows();
+      if (data && data.length) {
+        images = data.map((row) => row.image_url);
+      }
+
+      const ctx = await getEditContext();
+      if (ctx?.role === 'admin') {
+        refreshSiteGalleryAdmin();
+      }
+
       let currentIndex = 0;
       const carouselImage = document.getElementById('carousel-image');
       const prevBtn = document.querySelector('.prev-btn');

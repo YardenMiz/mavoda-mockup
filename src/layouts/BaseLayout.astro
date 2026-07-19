@@ -8,9 +8,10 @@ interface Props {
   title: string;
   description: string;
   hideSignupPopup?: boolean;
+  hideEditBar?: boolean;
 }
 
-const { title, description, hideSignupPopup = false } = Astro.props;
+const { title, description, hideSignupPopup = false, hideEditBar = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="he" dir="rtl">
@@ -35,7 +36,7 @@ const { title, description, hideSignupPopup = false } = Astro.props;
   </script>
   <slot name="head" />
 </head>
-<body>
+<body data-hide-edit-bar={hideEditBar ? 'true' : 'false'}>
   <Header />
   <MovingStrip />
   <slot />
@@ -43,7 +44,13 @@ const { title, description, hideSignupPopup = false } = Astro.props;
   {!hideSignupPopup && <RegistrationPopup />}
   <script>
     import { initSportContent } from '../lib/sportContent.js';
+    import { getEditContext, mountEditBar } from '../lib/inlineEditor.js';
+
     initSportContent();
+
+    if (document.body.dataset.hideEditBar !== 'true') {
+      getEditContext().then(mountEditBar);
+    }
   </script>
 </body>
 </html>
