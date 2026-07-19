@@ -4,10 +4,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title={`ניהול תוכן - העמותה לספורט`} description={`עמוד ניהול לרכזי הענפים`} hideSignupPopup={true}>
 <Fragment slot="head">
   <style>
+    :global(body) {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .admin-login-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .admin-login-wrap[hidden] {
+      display: none;
+    }
+    .admin-login-wrap .admin-card {
+      width: 100%;
+      max-width: 420px;
+    }
     .admin-wrap {
       max-width: 720px;
       margin: 2rem auto;
       padding: 0 1rem;
+      width: 100%;
     }
     .admin-card {
       background: #fff;
@@ -95,12 +121,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       font-size: 0.9rem;
       min-height: 1.2em;
     }
+    .admin-hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: -0.5rem;
+    }
+    .reg-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .reg-section input,
+    .reg-section textarea {
+      padding: 0.5rem 0.6rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .reg-section button {
+      background: #d33;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      width: fit-content;
+    }
+    #add-regulation-section {
+      background: #eee;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
   </style>
 </Fragment>
 
-<main class="container">
-  <div class="admin-wrap">
-    <div class="admin-card" id="admin-login">
+<main class="container admin-main">
+  <div class="admin-login-wrap" id="admin-login-wrap">
+    <div class="admin-card">
       <h1>כניסת רכזים</h1>
       <form class="admin-form" id="login-form">
         <input type="email" name="email" placeholder="אימייל" required>
@@ -109,8 +175,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </form>
       <p id="login-status"></p>
     </div>
+  </div>
 
-    <div id="admin-panel" hidden>
+  <div class="admin-wrap" id="admin-panel" hidden>
       <div class="admin-card">
         <div class="admin-header">
           <h1>ניהול תוכן ענפים</h1>
@@ -165,18 +232,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="admin-card">
         <h2>תקנון</h2>
         <form class="admin-form" id="regulations-form">
-          <textarea id="regulations-body" rows="10" placeholder="ניתן להשתמש בתגיות HTML כמו <h3> ו-<p>"></textarea>
+          <div id="regulations-sections"></div>
+          <button type="button" id="add-regulation-section">הוסף סעיף</button>
           <button type="submit">שמור תקנון</button>
         </form>
       </div>
     </div>
-  </div>
 </main>
 
 <script>
   import { supabase } from '../lib/supabase.js';
 
-  const loginSection = document.getElementById('admin-login');
+  const loginSection = document.getElementById('admin-login-wrap');
   const panelSection = document.getElementById('admin-panel');
   const loginForm = document.getElementById('login-form');
   const loginStatus = document.getElementById('login-status');
@@ -191,7 +258,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const upcomingList = document.getElementById('upcoming-list');
   const resultsList = document.getElementById('results-list');
   const galleryList = document.getElementById('gallery-list');
-  const regulationsBody = document.getElementById('regulations-body');
+  const regSectionsContainer = document.getElementById('regulations-sections');
+  const addRegSectionBtn = document.getElementById('add-regulation-section');
 
   const addUpcomingForm = document.getElementById('add-upcoming-form');
   const addResultForm = document.getElementById('add-result-form');
@@ -199,6 +267,76 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const regulationsForm = document.getElementById('regulations-form');
 
   let currentSlug = null;
+  let regSections = [];
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str ?? '';
+    return div.innerHTML;
+  }
+
+  // Regulation text is stored as simple <h3>title</h3><p>content</p> pairs.
+  // Parsing/building it here means coordinators only ever see plain title +
+  // text fields and never have to read or write HTML themselves.
+  function parseRegulationsHtml(html) {
+    const container = document.createElement('div');
+    container.innerHTML = html || '';
+    const children = [...container.children];
+    const sections = [];
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].tagName === 'H3') {
+        const title = children[i].textContent;
+        let content = '';
+        if (children[i + 1] && children[i + 1].tagName === 'P') {
+          content = children[i + 1].textContent;
+          i++;
+        }
+        sections.push({ title, content });
+      }
+    }
+    if (!sections.length) {
+      const text = container.textContent.trim();
+      if (text) sections.push({ title: '', content: text });
+    }
+    return sections;
+  }
+
+  function buildRegulationsHtml(sections) {
+    return sections
+      .filter((s) => s.title.trim() || s.content.trim())
+      .map((s) => `<h3>${escapeHtml(s.title)}</h3><p>${escapeHtml(s.content)}</p>`)
+      .join('');
+  }
+
+  function renderRegSections() {
+    regSectionsContainer.innerHTML = '';
+    regSections.forEach((section, i) => {
+      const row = document.createElement('div');
+      row.className = 'reg-section';
+
+      const titleInput = document.createElement('input');
+      titleInput.placeholder = 'כותרת הסעיף (למשל: כללי המשחק)';
+      titleInput.value = section.title;
+      titleInput.addEventListener('input', () => { regSections[i].title = titleInput.value; });
+
+      const contentTextarea = document.createElement('textarea');
+      contentTextarea.rows = 3;
+      contentTextarea.placeholder = 'תוכן הסעיף';
+      contentTextarea.value = section.content;
+      contentTextarea.addEventListener('input', () => { regSections[i].content = contentTextarea.value; });
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.textContent = 'מחק סעיף';
+      deleteBtn.addEventListener('click', () => {
+        regSections.splice(i, 1);
+        renderRegSections();
+      });
+
+      row.append(titleInput, contentTextarea, deleteBtn);
+      regSectionsContainer.appendChild(row);
+    });
+  }
 
   function setStatus(msg) {
     adminStatus.textContent = msg;
@@ -240,7 +378,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     renderList(resultsList, matches.filter((m) => m.is_result), (m) => `${m.opponent} — ${m.when_label}${m.score ? ` (${m.score})` : ''}`, 'sport_matches');
     renderList(galleryList, galleryRes.data || [], (g) => g.caption || g.image_url, 'sport_gallery');
 
-    regulationsBody.value = regsRes.data?.body || '';
+    regSections = parseRegulationsHtml(regsRes.data?.body || '');
+    if (!regSections.length) regSections = [{ title: '', content: '' }];
+    renderRegSections();
   }
 
   function renderList(ul, rows, label, table) {
@@ -338,11 +478,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     setStatus('נוסף');
   });
 
+  addRegSectionBtn.addEventListener('click', () => {
+    regSections.push({ title: '', content: '' });
+    renderRegSections();
+  });
+
   regulationsForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     await supabase.from('sport_regulations').upsert({
       sport_slug: currentSlug,
-      body: regulationsBody.value,
+      body: buildRegulationsHtml(regSections),
     }, { onConflict: 'sport_slug' });
     setStatus('נשמר');
   });
