@@ -1,0 +1,140 @@
+<div id="signup-popup" class="signup-popup" hidden>
+  <div class="signup-popup-box">
+    <button type="button" class="signup-popup-close" aria-label="סגור">&times;</button>
+    <h2>הצטרפו אלינו!</h2>
+    <p>השאירו פרטים ונחזור אליכם עם כל המידע על הליגות והענפים</p>
+    <form id="signup-popup-form">
+      <input type="text" name="full_name" placeholder="שם מלא" required>
+      <input type="tel" name="phone" placeholder="טלפון" required>
+      <input type="email" name="email" placeholder="דוא&quot;ל" required>
+      <button type="submit">שליחה</button>
+    </form>
+    <p id="signup-popup-status" role="status"></p>
+  </div>
+</div>
+
+<style>
+  .signup-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .signup-popup[hidden] {
+    display: none;
+  }
+  .signup-popup-box {
+    background: #fff;
+    padding: 32px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  .signup-popup-close {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+  }
+  .signup-popup-close:hover {
+    color: #000;
+  }
+  .signup-popup-box h2 {
+    margin: 0 0 8px;
+  }
+  .signup-popup-box p {
+    margin: 0 0 20px;
+    color: #555;
+  }
+  #signup-popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #signup-popup-form input {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  #signup-popup-form button {
+    padding: 10px;
+    background: #3ac41e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #signup-popup-form button:hover {
+    background: #2a9e15;
+  }
+  #signup-popup-status {
+    margin: 12px 0 0;
+    font-size: 0.9rem;
+  }
+</style>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+
+  const SEEN_KEY = 'mavoda_signup_popup_seen';
+  const popup = document.getElementById('signup-popup');
+  const form = document.getElementById('signup-popup-form');
+  const status = document.getElementById('signup-popup-status');
+  const closeBtn = popup.querySelector('.signup-popup-close');
+
+  function dismiss() {
+    localStorage.setItem(SEEN_KEY, '1');
+    popup.hidden = true;
+  }
+
+  if (!localStorage.getItem(SEEN_KEY)) {
+    popup.hidden = false;
+  }
+
+  closeBtn.addEventListener('click', dismiss);
+
+  popup.addEventListener('click', (event) => {
+    if (event.target === popup) dismiss();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !popup.hidden) dismiss();
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const submitBtn = form.querySelector('button');
+    submitBtn.disabled = true;
+    status.textContent = 'שולח...';
+
+    const { error } = await supabase.from('registrations').insert({
+      full_name: data.get('full_name'),
+      phone: data.get('phone'),
+      email: data.get('email'),
+    });
+
+    if (error) {
+      status.textContent = 'שגיאה בשליחה, נסו שוב מאוחר יותר.';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    status.textContent = 'תודה! נחזור אליכם בהקדם.';
+    setTimeout(dismiss, 1500);
+  });
+</script>

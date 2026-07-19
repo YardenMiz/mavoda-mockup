@@ -2,13 +2,15 @@
 import Header from '../components/Header.astro';
 import MovingStrip from '../components/MovingStrip.astro';
 import Footer from '../components/Footer.astro';
+import RegistrationPopup from '../components/RegistrationPopup.astro';
 
 interface Props {
   title: string;
   description: string;
+  hideSignupPopup?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, hideSignupPopup = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="he" dir="rtl">
@@ -38,5 +40,10 @@ const { title, description } = Astro.props;
   <MovingStrip />
   <slot />
   <Footer />
+  {!hideSignupPopup && <RegistrationPopup />}
+  <script>
+    import { initSportContent } from '../lib/sportContent.js';
+    initSportContent();
+  </script>
 </body>
 </html>

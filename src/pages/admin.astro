@@ -1,0 +1,357 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title={`ניהול תוכן - העמותה לספורט`} description={`עמוד ניהול לרכזי הענפים`} hideSignupPopup={true}>
+<Fragment slot="head">
+  <style>
+    .admin-wrap {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .admin-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .admin-card h2 {
+      margin-top: 0;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .admin-form input,
+    .admin-form textarea,
+    .admin-form select {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .admin-form button,
+    .admin-inline-form button,
+    #logout-btn {
+      padding: 0.6rem 1rem;
+      background: #3ac41e;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      width: fit-content;
+    }
+    #logout-btn {
+      background: #555;
+    }
+    .admin-list {
+      list-style: none;
+      margin: 0 0 1rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .admin-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+    }
+    .admin-list li button {
+      background: #d33;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .admin-inline-form {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .admin-inline-form input {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    #admin-status {
+      font-size: 0.9rem;
+      min-height: 1.2em;
+    }
+  </style>
+</Fragment>
+
+<main class="container">
+  <div class="admin-wrap">
+    <div class="admin-card" id="admin-login">
+      <h1>כניסת רכזים</h1>
+      <form class="admin-form" id="login-form">
+        <input type="email" name="email" placeholder="אימייל" required>
+        <input type="password" name="password" placeholder="סיסמה" required>
+        <button type="submit">התחבר</button>
+      </form>
+      <p id="login-status"></p>
+    </div>
+
+    <div id="admin-panel" hidden>
+      <div class="admin-card">
+        <div class="admin-header">
+          <h1>ניהול תוכן ענפים</h1>
+          <button type="button" id="logout-btn">התנתק</button>
+        </div>
+        <label for="sport-select">בחר ענף לעריכה:</label>
+        <select id="sport-select"></select>
+        <p id="admin-status"></p>
+      </div>
+
+      <div class="admin-card">
+        <h2>פרטי רכז</h2>
+        <form class="admin-form" id="coordinator-form">
+          <input id="coord-name" placeholder="שם הרכז">
+          <input id="coord-phone" placeholder="טלפון">
+          <button type="submit">שמור</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>משחקים קרובים</h2>
+        <ul class="admin-list" id="upcoming-list"></ul>
+        <form class="admin-inline-form" id="add-upcoming-form">
+          <input name="opponent" placeholder="קבוצות / תיאור" required>
+          <input name="when_label" placeholder="מתי (למשל: שבת, 18:00)" required>
+          <button type="submit">הוסף</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>תוצאות</h2>
+        <ul class="admin-list" id="results-list"></ul>
+        <form class="admin-inline-form" id="add-result-form">
+          <input name="opponent" placeholder="קבוצות / תיאור" required>
+          <input name="when_label" placeholder="תאריך">
+          <input name="score" placeholder="תוצאה">
+          <input name="season_year" type="number" placeholder="שנה" value="2026">
+          <button type="submit">הוסף</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>גלריה</h2>
+        <ul class="admin-list" id="gallery-list"></ul>
+        <form class="admin-inline-form" id="add-gallery-form">
+          <input name="image_url" placeholder="קישור לתמונה" required>
+          <input name="caption" placeholder="כיתוב (אופציונלי)">
+          <button type="submit">הוסף</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>תקנון</h2>
+        <form class="admin-form" id="regulations-form">
+          <textarea id="regulations-body" rows="10" placeholder="ניתן להשתמש בתגיות HTML כמו <h3> ו-<p>"></textarea>
+          <button type="submit">שמור תקנון</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+
+  const loginSection = document.getElementById('admin-login');
+  const panelSection = document.getElementById('admin-panel');
+  const loginForm = document.getElementById('login-form');
+  const loginStatus = document.getElementById('login-status');
+  const adminStatus = document.getElementById('admin-status');
+  const sportSelect = document.getElementById('sport-select');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  const coordinatorForm = document.getElementById('coordinator-form');
+  const coordName = document.getElementById('coord-name');
+  const coordPhone = document.getElementById('coord-phone');
+
+  const upcomingList = document.getElementById('upcoming-list');
+  const resultsList = document.getElementById('results-list');
+  const galleryList = document.getElementById('gallery-list');
+  const regulationsBody = document.getElementById('regulations-body');
+
+  const addUpcomingForm = document.getElementById('add-upcoming-form');
+  const addResultForm = document.getElementById('add-result-form');
+  const addGalleryForm = document.getElementById('add-gallery-form');
+  const regulationsForm = document.getElementById('regulations-form');
+
+  let currentSlug = null;
+
+  function setStatus(msg) {
+    adminStatus.textContent = msg;
+    if (msg) setTimeout(() => { if (adminStatus.textContent === msg) adminStatus.textContent = ''; }, 2500);
+  }
+
+  async function showPanel() {
+    loginSection.hidden = true;
+    panelSection.hidden = false;
+    const { data: sports } = await supabase.from('sports').select('slug, name').order('name');
+    sportSelect.innerHTML = (sports || [])
+      .map((s) => `<option value="${s.slug}">${s.name}</option>`)
+      .join('');
+    if (sports && sports.length) {
+      currentSlug = sports[0].slug;
+      await loadSport(currentSlug);
+    }
+  }
+
+  function showLogin() {
+    loginSection.hidden = false;
+    panelSection.hidden = true;
+  }
+
+  async function loadSport(slug) {
+    currentSlug = slug;
+    const [sportRes, matchesRes, galleryRes, regsRes] = await Promise.all([
+      supabase.from('sports').select('*').eq('slug', slug).maybeSingle(),
+      supabase.from('sport_matches').select('*').eq('sport_slug', slug).order('created_at'),
+      supabase.from('sport_gallery').select('*').eq('sport_slug', slug).order('created_at'),
+      supabase.from('sport_regulations').select('*').eq('sport_slug', slug).maybeSingle(),
+    ]);
+
+    coordName.value = sportRes.data?.coordinator_name || '';
+    coordPhone.value = sportRes.data?.coordinator_phone || '';
+
+    const matches = matchesRes.data || [];
+    renderList(upcomingList, matches.filter((m) => !m.is_result), (m) => `${m.opponent} — ${m.when_label}`, 'sport_matches');
+    renderList(resultsList, matches.filter((m) => m.is_result), (m) => `${m.opponent} — ${m.when_label}${m.score ? ` (${m.score})` : ''}`, 'sport_matches');
+    renderList(galleryList, galleryRes.data || [], (g) => g.caption || g.image_url, 'sport_gallery');
+
+    regulationsBody.value = regsRes.data?.body || '';
+  }
+
+  function renderList(ul, rows, label, table) {
+    ul.innerHTML = '';
+    for (const row of rows) {
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = label(row);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'מחק';
+      btn.addEventListener('click', async () => {
+        await supabase.from(table).delete().eq('id', row.id);
+        await loadSport(currentSlug);
+        setStatus('נמחק');
+      });
+      li.append(span, btn);
+      ul.appendChild(li);
+    }
+  }
+
+  loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(loginForm);
+    loginStatus.textContent = 'מתחבר...';
+    const { error } = await supabase.auth.signInWithPassword({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+    if (error) {
+      loginStatus.textContent = 'התחברות נכשלה, בדוק אימייל/סיסמה.';
+      return;
+    }
+    loginStatus.textContent = '';
+    loginForm.reset();
+    await showPanel();
+  });
+
+  logoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    showLogin();
+  });
+
+  sportSelect.addEventListener('change', () => loadSport(sportSelect.value));
+
+  coordinatorForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    await supabase.from('sports').update({
+      coordinator_name: coordName.value,
+      coordinator_phone: coordPhone.value,
+    }).eq('slug', currentSlug);
+    setStatus('נשמר');
+  });
+
+  addUpcomingForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(addUpcomingForm);
+    await supabase.from('sport_matches').insert({
+      sport_slug: currentSlug,
+      opponent: data.get('opponent'),
+      when_label: data.get('when_label'),
+      is_result: false,
+    });
+    addUpcomingForm.reset();
+    await loadSport(currentSlug);
+    setStatus('נוסף');
+  });
+
+  addResultForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(addResultForm);
+    await supabase.from('sport_matches').insert({
+      sport_slug: currentSlug,
+      opponent: data.get('opponent'),
+      when_label: data.get('when_label') || '',
+      score: data.get('score') || null,
+      season_year: Number(data.get('season_year')) || new Date().getFullYear(),
+      is_result: true,
+    });
+    addResultForm.reset();
+    await loadSport(currentSlug);
+    setStatus('נוסף');
+  });
+
+  addGalleryForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(addGalleryForm);
+    await supabase.from('sport_gallery').insert({
+      sport_slug: currentSlug,
+      image_url: data.get('image_url'),
+      caption: data.get('caption') || null,
+    });
+    addGalleryForm.reset();
+    await loadSport(currentSlug);
+    setStatus('נוסף');
+  });
+
+  regulationsForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    await supabase.from('sport_regulations').upsert({
+      sport_slug: currentSlug,
+      body: regulationsBody.value,
+    }, { onConflict: 'sport_slug' });
+    setStatus('נשמר');
+  });
+
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    await showPanel();
+  } else {
+    showLogin();
+  }
+</script>
+</BaseLayout>

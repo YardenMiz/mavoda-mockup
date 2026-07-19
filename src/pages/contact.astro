@@ -74,17 +74,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <h3 style="margin-top: 2rem;">שלח לנו הודעה</h3>
-      <form class="contact-form" action="mailto:yardenal042@Gmail.com" method="post" enctype="text/plain">
-        <input type="text" placeholder="שם הארגון" name="organization_name" required>
+      <form class="contact-form" id="contact-form">
+        <input type="text" placeholder="שם הארגון" name="organization_name">
         <input type="text" placeholder="שם מלא" name="full_name" required>
-        <input type="text" placeholder="נייד" name="mobile" required>
-        <input type="text" placeholder="שמך" name="your_name" required>
+        <input type="tel" placeholder="נייד" name="mobile" required>
         <input type="email" placeholder="כתובת דואר אלקטרוני" name="email" required>
-        <input type="text" placeholder="נושא" name="subject" required>
+        <input type="text" placeholder="נושא" name="subject">
         <textarea placeholder="הודעתך..." rows="6" name="message" required></textarea>
         <button type="submit">שלח הודעה</button>
       </form>
+      <p id="contact-form-status" role="status"></p>
     </div>
 
   </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('contact-form-status');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const submitBtn = form.querySelector('button');
+    submitBtn.disabled = true;
+    status.textContent = 'שולח...';
+
+    const { error } = await supabase.from('contact_messages').insert({
+      organization_name: data.get('organization_name') || null,
+      full_name: data.get('full_name'),
+      mobile: data.get('mobile'),
+      email: data.get('email'),
+      subject: data.get('subject') || null,
+      message: data.get('message'),
+    });
+
+    if (error) {
+      status.textContent = 'שגיאה בשליחה, נסו שוב מאוחר יותר.';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    status.textContent = 'ההודעה נשלחה בהצלחה, נחזור אליך בהקדם.';
+    form.reset();
+    submitBtn.disabled = false;
+  });
+</script>
 </BaseLayout>
