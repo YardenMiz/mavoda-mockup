@@ -32,10 +32,54 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       gap: 20px;
       margin-bottom: 40px;
     }
+    /* Right column now only holds the photo carousel (news moved to the
+       left column), enlarged to half of the fully-stretched size. */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .right-column .sidebar-section {
+      flex: 0 1 auto;
+      height: 50%;
+    }
+    .right-column .image-carousel {
+      flex: 1;
+      height: auto;
+    }
+    /* News sits below the notices list, each in its own distinct white
+       card rather than sharing one continuous background. Notices is
+       shrunk to ~66% less than its previous share of the shared height. */
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: none;
+      padding: 0;
+      box-shadow: none;
+      border-radius: 0;
+      align-self: start;
+    }
+    .notices-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      flex: 0.5;
+      min-height: 0;
+    }
     .notices-scroll {
-      flex: 1; /* תופס את כל הגובה הנותר בעמודה השמאלית */
+      flex: 1;
       overflow: hidden;
       position: relative;
+      min-height: 300px;
+    }
+    .left-column .news-articles {
+      flex: 0 0 auto;
+      margin-top: 0;
+      min-height: 0;
     }
     .notices-wrapper {
       display: flex;
@@ -91,24 +135,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div id="site-gallery-admin"></div>
         </aside>
-        <section class="news-articles">
-          <h2 class="section-title">חדשות ומאמרים</h2>
-          <div class="articles-grid">
-            <article class="article-card">
-              <div class="article-source sport5">ספורט 5</div>
-              <h3><a href="https://www.sport5.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מכבי חיפה מתחזקת: חתימה על שחקן חדש</a></h3>
-              <p>הירוקים מחיפה הודיעו על חתימה של שחקן התקפה חדש מהליגה האיטלקית. השחקן צפוי להצטרף לקבוצה בעונה הבאה.</p>
-              <time datetime="2026-04-12">לפני שעה</time>
-            </article>
-
-            <article class="article-card">
-              <div class="article-source one">ONE</div>
-              <h3><a href="https://www.one.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מהפך דרמטי: הפועל ת"א מנצחת את בית"ר 3-2</a></h3>
-              <p>במשחק מותח שהסתיים רק בדקות הסיום, הצליחה הפועל ת"א להפוך פיגור 0-2 לניצחון 3-2 על בית"ר ירושלים.</p>
-              <time datetime="2026-04-11">אתמול</time>
-            </article>
-          </div>
-        </section>
       </div>
     <div class="center-column leagues-categories">
       <div class="league-category" data-sport="כדורעף">
@@ -231,8 +257,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
     </div> <div class="left-column">
+      <div class="notices-card">
         <h3>הודעות חשובות</h3>
-        
+
 <div class="notices-scroll">
   <div class="notices-wrapper">
     <div class="notices-group">
@@ -376,6 +403,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </div>
 </div>
+      </div>
+        <section class="news-articles">
+          <h2 class="section-title">חדשות ומאמרים</h2>
+          <div class="articles-grid">
+            <article class="article-card">
+              <div class="article-source sport5">ספורט 5</div>
+              <h3><a href="https://www.sport5.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מכבי חיפה מתחזקת: חתימה על שחקן חדש</a></h3>
+              <p>הירוקים מחיפה הודיעו על חתימה של שחקן התקפה חדש מהליגה האיטלקית. השחקן צפוי להצטרף לקבוצה בעונה הבאה.</p>
+              <time datetime="2026-04-12">לפני שעה</time>
+            </article>
+
+            <article class="article-card">
+              <div class="article-source one">ONE</div>
+              <h3><a href="https://www.one.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מהפך דרמטי: הפועל ת"א מנצחת את בית"ר 3-2</a></h3>
+              <p>במשחק מותח שהסתיים רק בדקות הסיום, הצליחה הפועל ת"א להפוך פיגור 0-2 לניצחון 3-2 על בית"ר ירושלים.</p>
+              <time datetime="2026-04-11">אתמול</time>
+            </article>
+          </div>
+        </section>
   </div>
     </section>
   </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>

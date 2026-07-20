@@ -6,6 +6,15 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+async function uploadImageFile(file, pathPrefix) {
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const path = `${pathPrefix}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage.from('gallery-images').upload(path, file);
+  if (error) return { error };
+  const { data } = supabase.storage.from('gallery-images').getPublicUrl(path);
+  return { url: data.publicUrl };
+}
+
 let stylesInjected = false;
 function injectStyles() {
   if (stylesInjected) return;
@@ -268,22 +277,35 @@ function mountGalleryEditing(main, slug, refresh) {
     const form = document.createElement('div');
     form.className = 'ie-inline-form';
     form.innerHTML = `
-      <input type="text" class="ie-image-url" placeholder="קישור לתמונה">
+      <input type="file" class="ie-image-file" accept="image/*">
       <input type="text" class="ie-caption" placeholder="כיתוב (אופציונלי)">
       <div class="ie-form-actions">
         <button type="button" class="ie-save-btn">הוסף</button>
         <button type="button" class="ie-cancel-btn">ביטול</button>
       </div>
     `;
-    form.querySelector('.ie-save-btn').addEventListener('click', async () => {
-      const imageUrl = form.querySelector('.ie-image-url').value.trim();
-      if (!imageUrl) return;
+    const saveBtn = form.querySelector('.ie-save-btn');
+    saveBtn.addEventListener('click', async () => {
+      const file = form.querySelector('.ie-image-file').files[0];
+      if (!file) return showFormError(form, { message: 'יש לבחור קובץ תמונה' });
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'מעלה...';
+      const { url, error: uploadError } = await uploadImageFile(file, slug);
+      if (uploadError) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'הוסף';
+        return showFormError(form, uploadError);
+      }
       const { error } = await supabase.from('sport_gallery').insert({
         sport_slug: slug,
-        image_url: imageUrl,
+        image_url: url,
         caption: form.querySelector('.ie-caption').value.trim() || null,
       });
-      if (error) return showFormError(form, error);
+      if (error) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'הוסף';
+        return showFormError(form, error);
+      }
       form.remove();
       await refresh();
     });
@@ -428,21 +450,34 @@ export function mountSiteGalleryEditControls(listContainer, images, refresh) {
     const form = document.createElement('div');
     form.className = 'ie-inline-form';
     form.innerHTML = `
-      <input type="text" class="ie-image-url" placeholder="קישור לתמונה">
+      <input type="file" class="ie-image-file" accept="image/*">
       <input type="text" class="ie-caption" placeholder="כיתוב (אופציונלי)">
       <div class="ie-form-actions">
         <button type="button" class="ie-save-btn">הוסף</button>
         <button type="button" class="ie-cancel-btn">ביטול</button>
       </div>
     `;
-    form.querySelector('.ie-save-btn').addEventListener('click', async () => {
-      const imageUrl = form.querySelector('.ie-image-url').value.trim();
-      if (!imageUrl) return;
+    const saveBtn = form.querySelector('.ie-save-btn');
+    saveBtn.addEventListener('click', async () => {
+      const file = form.querySelector('.ie-image-file').files[0];
+      if (!file) return showFormError(form, { message: 'יש לבחור קובץ תמונה' });
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'מעלה...';
+      const { url, error: uploadError } = await uploadImageFile(file, 'site');
+      if (uploadError) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'הוסף';
+        return showFormError(form, uploadError);
+      }
       const { error } = await supabase.from('site_gallery').insert({
-        image_url: imageUrl,
+        image_url: url,
         caption: form.querySelector('.ie-caption').value.trim() || null,
       });
-      if (error) return showFormError(form, error);
+      if (error) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'הוסף';
+        return showFormError(form, error);
+      }
       form.remove();
       await refresh();
     });

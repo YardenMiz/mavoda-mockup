@@ -39,6 +39,50 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     th {
       background-color: #f2f2f2;
     }
+    .about-images-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .about-image-card {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .about-image-placeholder,
+    .about-person-img {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+    }
+    .about-image-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed #cbd5e1;
+      background: #fff;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .about-person-img {
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+    }
+    .about-image-card figcaption {
+      font-weight: 700;
+      color: #1f2937;
+      text-align: center;
+    }
+    @media (max-width: 620px) {
+      .about-images-row {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </Fragment>
 
@@ -50,6 +94,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="hero-lead">העמותה לספורט - מרחב חיפה והצפון</p>
       </div>
     </section>
+
+    <div class="about-images-row">
+      <figure class="about-image-card">
+        <img src="skin/design/Shifra.jpeg" alt="שפרה ענתבי" class="about-person-img">
+        <figcaption>מנכ"לית העמותה</figcaption>
+      </figure>
+      <figure class="about-image-card">
+        <img src="skin/design/Moshe.jpeg" alt="משה מזרחי" class="about-person-img">
+        <figcaption>יו"ר העמותה</figcaption>
+      </figure>
+      <figure class="about-image-card">
+        <div class="about-image-placeholder">תמונה</div>
+        <figcaption>יו"ר האספה</figcaption>
+      </figure>
+    </div>
 
     <div class="about-section">
       <div class="about-content">
