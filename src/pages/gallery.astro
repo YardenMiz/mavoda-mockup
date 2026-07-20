@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title={`גלריות — בית ספורט`} description={`גלריית תמונות מפעילויות ואירועי הספורט של העמותה לספורט מרחב חיפה והצפון.`}>
-<main class="container main-grid"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
+<main class="container main-grid"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="left"></div></aside><div class="main-content">
     <section class="hero">
       <img src="skin/design/hero.jpg" alt="גלריות ספורט" class="hero-img" width="851" height="315">
       <div class="hero-overlay">
@@ -82,5 +82,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </a>
     </section>
 
-  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+  </div><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="right"></div></aside></div></main>
 </BaseLayout>

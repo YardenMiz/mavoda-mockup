@@ -1,15 +1,102 @@
 <div class="moving-strip">
-  <div class="strip-content">
-    <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 16:30</span>
-    <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
-    <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
-    <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
-    <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
-    <!-- Duplicate for seamless loop -->
-    <span class="strip-item">🔴 משחק חי: מכבי חיפה vs הפועל ירושלים - 16:30</span>
-    <span class="strip-item">⚽ בחינת הקבוצה הצעירה - סיכום</span>
-    <span class="strip-item">🏀 כדורסל: ניצחון משמעותי לצהובים</span>
-    <span class="strip-item">🏊 שחייה: פינלים בחיפה של בתים בדרום</span>
-    <span class="strip-item">📰 חדשות אחרונות מעולם הספורט</span>
+  <div class="strip-content" id="strip-content"></div>
+</div>
+<button type="button" id="strip-edit-btn" class="strip-edit-btn" hidden>ערוך סטריפ</button>
+<div id="strip-admin-modal" class="strip-admin-modal" hidden>
+  <div class="strip-admin-modal-box">
+    <button type="button" class="strip-admin-close" aria-label="סגור">&times;</button>
+    <h3>עריכת הסטריפ העליון</h3>
+    <div id="strip-admin-list"></div>
   </div>
 </div>
+
+<style>
+  .strip-edit-btn {
+    position: fixed;
+    top: 46px; /* below the black edit-mode bar (#edit-mode-bar), which sits at top:0 */
+    inset-inline-end: 12px;
+    z-index: 3100;
+    background: #111827;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: Rubik, Arial, sans-serif;
+  }
+  .strip-admin-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .strip-admin-modal[hidden] {
+    display: none;
+  }
+  .strip-admin-modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 480px;
+    width: calc(100% - 40px);
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    font-family: Rubik, Arial, sans-serif;
+  }
+  .strip-admin-modal-box h3 {
+    margin-top: 0;
+  }
+  .strip-admin-close {
+    position: absolute;
+    top: 10px;
+    inset-inline-start: 10px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+  }
+</style>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+  import { getEditContext, mountStripAdmin } from '../lib/inlineEditor.js';
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str ?? '';
+    return div.innerHTML;
+  }
+
+  async function refreshStrip() {
+    const { data } = await supabase.from('strip_items').select('*').order('sort_order');
+    const items = data || [];
+    const content = document.getElementById('strip-content');
+    const html = items.map((it) => `<span class="strip-item">${escapeHtml(it.text)}</span>`).join('');
+    // Duplicated once so the CSS `translateX(-50%)` loop is seamless.
+    content.innerHTML = html + html;
+
+    const ctx = await getEditContext();
+    if (ctx?.role === 'admin') {
+      document.getElementById('strip-edit-btn').hidden = false;
+      mountStripAdmin(document.getElementById('strip-admin-list'), items, refreshStrip);
+    }
+  }
+
+  const editBtn = document.getElementById('strip-edit-btn');
+  const modal = document.getElementById('strip-admin-modal');
+  editBtn?.addEventListener('click', () => {
+    modal.hidden = false;
+  });
+  modal?.querySelector('.strip-admin-close')?.addEventListener('click', () => {
+    modal.hidden = true;
+  });
+
+  refreshStrip();
+</script>

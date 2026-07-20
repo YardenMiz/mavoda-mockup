@@ -52,13 +52,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       align-items: center;
       gap: 10px;
     }
-    .about-image-placeholder,
-    .about-person-img {
+    /* .about-image-placeholder / .about-person-img / figcaption are created by
+       inlineEditor.js in JS, so they never get Astro's data-astro-cid
+       attribute — scoped selectors would silently never match them. */
+    :global(.about-image-placeholder),
+    :global(.about-person-img) {
       width: 100%;
       height: 180px;
       border-radius: 10px;
     }
-    .about-image-placeholder {
+    :global(.about-image-placeholder) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -68,12 +71,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       font-size: 14px;
       font-weight: 600;
     }
-    .about-person-img {
+    :global(.about-person-img) {
       object-fit: contain;
       background: #fff;
       border: 1px solid #e5e7eb;
     }
-    .about-image-card figcaption {
+    :global(.about-image-card figcaption) {
       font-weight: 700;
       color: #1f2937;
       text-align: center;
@@ -86,7 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </style>
 </Fragment>
 
-<main class="container main-grid"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
+<main class="container main-grid"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="left"></div></aside><div class="main-content">
     <section class="hero"> 
       <img src="skin/design/hero.jpg" alt="כותרת" class="hero-img" width="851" height="315">
       <div class="hero-overlay">
@@ -95,71 +98,123 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <div class="about-images-row">
-      <figure class="about-image-card">
-        <img src="skin/design/Shifra.jpeg" alt="שפרה ענתבי" class="about-person-img">
-        <figcaption>מנכ"לית העמותה</figcaption>
-      </figure>
-      <figure class="about-image-card">
-        <img src="skin/design/Moshe.jpeg" alt="משה מזרחי" class="about-person-img">
-        <figcaption>יו"ר העמותה</figcaption>
-      </figure>
-      <figure class="about-image-card">
-        <div class="about-image-placeholder">תמונה</div>
-        <figcaption>יו"ר האספה</figcaption>
-      </figure>
+    <div class="about-images-row" id="about-images-row">
+      <figure class="about-image-card" data-slot="right"><div class="about-image-placeholder">תמונה</div><figcaption></figcaption></figure>
+      <figure class="about-image-card" data-slot="center"><div class="about-image-placeholder">תמונה</div><figcaption></figcaption></figure>
+      <figure class="about-image-card" data-slot="left"><div class="about-image-placeholder">תמונה</div><figcaption></figcaption></figure>
     </div>
 
     <div class="about-section">
-      <div class="about-content">
-        <h2>דבר המנכ"לית</h2>
-        <p>העמותה לספורט- ליגה למקומות העבודה שמה לה כמטרה לפתח ולטפח פעילות ספורטיבית עממית ותחרותית במקומות העבודה באמתעות ליגות סדירות, הרצאות, כנסים וימים מרוכזים.</p>
-        <p>אני רואה חשיבות באימוץ פעילות גופנית כחלק מאורח חייהם של העובדים בארגונים שונים.</p>
-        <p>מרגש אותי כל פעם מחדש, לראות את העובדים הרבים המשקיעים מזמנם הפנוי לשם קיום פעילות גופנית עם חבריהם לעבודה.</p>
-        <p>הפעילות הגופנית מחזקת את המחוברות לארגון בכל הדרגים, ויוצרת גיבוש חברתי אשר תורם להשגת יעדי הארגון ולשיפור התפוקות.</p>
+      <div class="about-content" id="about-content">
+        <h2 data-section="ceo_message"></h2>
+        <div data-section-body="ceo_message"></div>
 
-        <h2>המטרות</h2>
-        <ul>
-          <li>פיתוח הספורט העממי והתחרותי באמצעות ארגון ליגות סדירות ושילוב ענפי ספורט חדש.</li>
-          <li>קידום אורח חיים בריא בארגונים.</li>
-          <li>שילוב אנשים מאתגרים בפעילות ספורטיבית.</li>
-          <li>פיתוח קשרים ומפגשים עם ליגות למקומות עבודה בעולם.</li>
-        </ul>
+        <h2 data-section="goals"></h2>
+        <ul data-section-body="goals"></ul>
 
-        <h2>החדשות</h2>
-        <p>בשנה זו יופעלו 2 ענפי ספורט חדשים</p>
-        <p>רצים בעבודה - קידום הריצה כספורט עממי בקרב עובדים במקומות הכולל ל-7 מרוצים למרחקים שונים ל- 5 ק"מ ו-10 ק"מ.</p>
-        <p>ירי ספורטיבי מבצעי - ירי הכולל 4 תחרויות ירי וקליעה למטרות נייחות או ניידות במגוון סגנונות, המבוצעות במגוון סוגי כלי נשק.</p>
+        <h2 data-section="news"></h2>
+        <div data-section-body="news"></div>
 
-        <h2>קצת עלינו</h2>
-        <p>בשנת 1954 הניח יצחק פינסק (פנאי)רכז התרבות במועצת פועלי חיפה את היסודות הראשונים לפעילות ספורטיבית במקומות העבודה.</p>
-        <p>ב 15 במאי 1954 נערך טורניר הכדורגל הראשון במסגרת ספורט במקומות העבודה בו לקחו חלק פעיל 15 קבוצות כדורגל, 9 קבוצות כדורסל, ו-8 קבוצות כדורעף.</p>
-        <p>כיום פעילים בעמותת הספורט ליגה למקומות העבודה על ידי ההסתדרות כ 2300 ספורטאים ב-11 ענפי ספורט שונים ומגוונים.</p>
+        <h2 data-section="history"></h2>
+        <div data-section-body="history"></div>
 
         <h2>חברי הנהלה</h2>
-        <table>
+        <table id="board-table">
           <thead>
             <tr><th>שם</th><th>תפקיד</th></tr>
           </thead>
-          <tbody>
-            <tr><td>שפרה ענתבי</td><td>מנכ"לית העמותה</td></tr>
-            <tr><td>משה מזרחי</td><td>יו"ר העמותה</td></tr>
-            <tr><td>אריה זלצר</td><td>חבר הנהלה</td></tr>
-            <tr><td>מיכה סילקו</td><td>חבר הנהלה</td></tr>
-            <tr><td>גיל יצחק</td><td>חבר הנהלה</td></tr>
-            <tr><td>מאיר ששה</td><td>חבר הנהלה</td></tr>
-            <tr><td>לאה לחם</td><td>חבר הנהלה</td></tr>
-            <tr><td>דורון ניסן</td><td>חבר הנהלה</td></tr>
-            <tr><td>מאיר ברנס</td><td>חבר הנהלה</td></tr>
-            <tr><td>שלומי בן</td><td>חבר הנהלה</td></tr>
-            <tr><td>עדי חיון</td><td>חבר הנהלה</td></tr>
-            <tr><td>גיא עודי</td><td>חבר הנהלה</td></tr>
-            <tr><td>סמדר ספרן</td><td>חבר הנהלה</td></tr>
-            <tr><td>נאוה מורד</td><td>חבר הנהלה</td></tr>
-          </tbody>
+          <tbody id="board-table-body"></tbody>
         </table>
       </div>
     </div>
 
-  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+  </div><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="right"></div></aside></div></main>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+  import {
+    getEditContext,
+    mountAboutSectionEditor,
+    mountAboutBoardEditor,
+    mountAboutImageEditor,
+  } from '../lib/inlineEditor.js';
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str ?? '';
+    return div.innerHTML;
+  }
+
+  async function refreshSections() {
+    const { data } = await supabase.from('about_sections').select('*').order('sort_order');
+    const sections = data || [];
+    const ctx = await getEditContext();
+    const isAdmin = ctx?.role === 'admin';
+
+    sections.forEach((section) => {
+      const heading = document.querySelector(`h2[data-section="${section.section_key}"]`);
+      const bodyEl = document.querySelector(`[data-section-body="${section.section_key}"]`);
+      if (heading) heading.textContent = section.heading;
+      if (bodyEl) {
+        const lines = (section.body || '').split('\n').filter((l) => l.trim());
+        bodyEl.innerHTML = section.is_list
+          ? lines.map((l) => `<li>${escapeHtml(l)}</li>`).join('')
+          : lines.map((l) => `<p>${escapeHtml(l)}</p>`).join('');
+      }
+      if (isAdmin && heading) mountAboutSectionEditor(heading, section, refreshSections);
+    });
+  }
+
+  async function refreshBoard() {
+    const { data } = await supabase.from('about_board_members').select('*').order('sort_order');
+    const members = data || [];
+    const tbody = document.getElementById('board-table-body');
+    tbody.innerHTML = members.map((m) => `
+      <tr data-id="${m.id}"><td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.role)}</td></tr>
+    `).join('');
+
+    const ctx = await getEditContext();
+    if (ctx?.role === 'admin') {
+      mountAboutBoardEditor(tbody, members, refreshBoard);
+    }
+  }
+
+  async function refreshImages() {
+    const { data } = await supabase.from('about_people_images').select('*');
+    const bySlot = Object.fromEntries((data || []).map((row) => [row.slot, row]));
+    const ctx = await getEditContext();
+    const isAdmin = ctx?.role === 'admin';
+
+    document.querySelectorAll('#about-images-row .about-image-card').forEach((figure) => {
+      const slot = figure.dataset.slot;
+      const row = bySlot[slot];
+      const caption = figure.querySelector('figcaption');
+      caption.textContent = row?.caption || '';
+
+      const existingImg = figure.querySelector('.about-person-img');
+      if (existingImg) existingImg.remove();
+      const existingPlaceholder = figure.querySelector('.about-image-placeholder');
+      if (existingPlaceholder) existingPlaceholder.remove();
+
+      if (row?.image_url) {
+        const img = document.createElement('img');
+        img.src = row.image_url;
+        img.alt = row.caption || '';
+        img.className = 'about-person-img';
+        figure.insertBefore(img, caption);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'about-image-placeholder';
+        placeholder.textContent = 'תמונה';
+        figure.insertBefore(placeholder, caption);
+      }
+
+      if (isAdmin) mountAboutImageEditor(figure, slot, row, refreshImages);
+    });
+  }
+
+  refreshSections();
+  refreshBoard();
+  refreshImages();
+</script>
 </BaseLayout>

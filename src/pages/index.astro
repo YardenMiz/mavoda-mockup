@@ -115,7 +115,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </style>
 </Fragment>
 
-<main class="container"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
+<main class="container"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="left"></div></aside><div class="main-content">
     <section class="hero">
       <img src="skin/design/hero.jpg" alt="כותרת" class="hero-img" width="851" height="315">
       <div class="hero-overlay">
@@ -259,177 +259,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div> <div class="left-column">
       <div class="notices-card">
         <h3>הודעות חשובות</h3>
-
-<div class="notices-scroll">
-  <div class="notices-wrapper">
-    <div class="notices-group">
-    <div class="notice-set">
-      <div class="notice-item">
-        <strong>עדכון חשוב</strong>
-        <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
-      </div>
-      <div class="notice-item">
-        <strong>רישום חדש סגור</strong>
-        <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-      </div>
-      <div class="notice-item">
-        <strong>תחרות מתוכננת</strong>
-        <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-      </div>
-      <div class="notice-item">
-        <strong>תרומה למועדון</strong>
-        <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-      </div>
-      <div class="notice-item">
-        <strong>עדכון לוח הציונים</strong>
-        <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-      </div>
-    </div>
-    <!-- שכפול התוכן כדי ליצור אשליית גלילה אינסופית -->
-    <div class="notice-set">
-      <div class="notice-item">
-        <strong>עדכון חשוב</strong>
-        <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
-      </div>
-      <div class="notice-item">
-        <strong>רישום חדש סגור</strong>
-        <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-      </div>
-      <div class="notice-item">
-        <strong>תחרות מתוכננת</strong>
-        <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-      </div>
-      <div class="notice-item">
-        <strong>תרומה למועדון</strong>
-        <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-      </div>
-      <div class="notice-item">
-        <strong>עדכון לוח הציונים</strong>
-        <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-      </div>
-    </div>
-    <!-- שכפול שני למניעת שטח ריק במסכים גבוהים -->
-    <div class="notice-set">
-      <div class="notice-item">
-        <strong>עדכון חשוב</strong>
-        <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
-      </div>
-      <div class="notice-item">
-        <strong>רישום חדש סגור</strong>
-        <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-      </div>
-      <div class="notice-item">
-        <strong>תחרות מתוכננת</strong>
-        <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-      </div>
-      <div class="notice-item">
-        <strong>תרומה למועדון</strong>
-        <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-      </div>
-      <div class="notice-item">
-        <strong>עדכון לוח הציונים</strong>
-        <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-      </div>
-    </div>
-    </div>
-    <!-- שכפול מדויק של הקבוצה הראשונה ליצירת לולאה אינסופית הרמטית -->
-    <div class="notices-group" aria-hidden="true">
-      <div class="notice-set">
-        <div class="notice-item">
-          <strong>עדכון חשוב</strong>
-          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
+        <div class="notices-scroll">
+          <div class="notices-wrapper"></div>
         </div>
-        <div class="notice-item">
-          <strong>רישום חדש סגור</strong>
-          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-        </div>
-        <div class="notice-item">
-          <strong>תחרות מתוכננת</strong>
-          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-        </div>
-        <div class="notice-item">
-          <strong>תרומה למועדון</strong>
-          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-        </div>
-        <div class="notice-item">
-          <strong>עדכון לוח הציונים</strong>
-          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-        </div>
-      </div>
-      <div class="notice-set">
-        <div class="notice-item">
-          <strong>עדכון חשוב</strong>
-          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
-        </div>
-        <div class="notice-item">
-          <strong>רישום חדש סגור</strong>
-          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-        </div>
-        <div class="notice-item">
-          <strong>תחרות מתוכננת</strong>
-          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-        </div>
-        <div class="notice-item">
-          <strong>תרומה למועדון</strong>
-          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-        </div>
-        <div class="notice-item">
-          <strong>עדכון לוח הציונים</strong>
-          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-        </div>
-      </div>
-      <div class="notice-set">
-        <div class="notice-item">
-          <strong>עדכון חשוב</strong>
-          <p>שינוי בשעות האימונים הבאות בתאריך 28 במרץ</p>
-        </div>
-        <div class="notice-item">
-          <strong>רישום חדש סגור</strong>
-          <p>רישום לקבוצות הנוער עבור העונה הבאה סגור כעת</p>
-        </div>
-        <div class="notice-item">
-          <strong>תחרות מתוכננת</strong>
-          <p>תחרות שחייה אזורית תתקיים בתאריך 15 באפריל</p>
-        </div>
-        <div class="notice-item">
-          <strong>תרומה למועדון</strong>
-          <p>תודה לתורמים החדשים שתמכו בפעילות שלנו</p>
-        </div>
-        <div class="notice-item">
-          <strong>עדכון לוח הציונים</strong>
-          <p>לוח הציונים של הליגה עודכן אתמול בערב</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        <div id="notices-admin"></div>
       </div>
         <section class="news-articles">
           <h2 class="section-title">חדשות ומאמרים</h2>
-          <div class="articles-grid">
-            <article class="article-card">
-              <div class="article-source sport5">ספורט 5</div>
-              <h3><a href="https://www.sport5.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מכבי חיפה מתחזקת: חתימה על שחקן חדש</a></h3>
-              <p>הירוקים מחיפה הודיעו על חתימה של שחקן התקפה חדש מהליגה האיטלקית. השחקן צפוי להצטרף לקבוצה בעונה הבאה.</p>
-              <time datetime="2026-04-12">לפני שעה</time>
-            </article>
-
-            <article class="article-card">
-              <div class="article-source one">ONE</div>
-              <h3><a href="https://www.one.co.il/" target="_blank" style="text-decoration: none; color: inherit;">מהפך דרמטי: הפועל ת"א מנצחת את בית"ר 3-2</a></h3>
-              <p>במשחק מותח שהסתיים רק בדקות הסיום, הצליחה הפועל ת"א להפוך פיגור 0-2 לניצחון 3-2 על בית"ר ירושלים.</p>
-              <time datetime="2026-04-11">אתמול</time>
-            </article>
-          </div>
+          <div class="articles-grid"></div>
+          <div id="articles-admin"></div>
         </section>
   </div>
     </section>
-  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+  </div><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="right"></div></aside></div></main>
 
 
 <script>
     import { supabase } from '../lib/supabase.js';
-    import { getEditContext, mountSiteGalleryEditControls } from '../lib/inlineEditor.js';
+    import { getEditContext, mountSiteGalleryEditControls, mountNoticesAdmin, mountArticlesAdmin } from '../lib/inlineEditor.js';
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str ?? '';
+      return div.innerHTML;
+    }
 
     async function loadSiteGalleryRows() {
       return supabase.from('site_gallery').select('*').order('created_at', { ascending: false });
@@ -443,7 +296,70 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       mountSiteGalleryEditControls(adminContainer, data || [], refreshSiteGalleryAdmin);
     }
 
+    // --- Homepage notices (marquee) -----------------------------------------
+
+    function buildNoticeSetHtml(notices) {
+      return `<div class="notice-set">${notices.map((n) => `
+        <div class="notice-item">
+          <strong>${escapeHtml(n.title)}</strong>
+          <p>${escapeHtml(n.body)}</p>
+        </div>`).join('')}</div>`;
+    }
+
+    function buildNoticesGroupHtml(notices, ariaHidden) {
+      const sets = [0, 1, 2].map(() => buildNoticeSetHtml(notices)).join('');
+      return `<div class="notices-group"${ariaHidden ? ' aria-hidden="true"' : ''}>${sets}</div>`;
+    }
+
+    async function refreshNotices() {
+      const wrapper = document.querySelector('.notices-wrapper');
+      const adminContainer = document.getElementById('notices-admin');
+      const { data } = await supabase.from('homepage_notices').select('*').order('sort_order');
+      const notices = data || [];
+
+      if (wrapper) {
+        wrapper.innerHTML = notices.length
+          ? buildNoticesGroupHtml(notices, false) + buildNoticesGroupHtml(notices, true)
+          : '<div class="notices-group"><div class="notice-set"><div class="notice-item"><p>אין הודעות כרגע</p></div></div></div>';
+      }
+
+      const ctx = await getEditContext();
+      if (adminContainer && ctx?.role === 'admin') {
+        mountNoticesAdmin(adminContainer, notices, refreshNotices);
+      }
+    }
+
+    // --- Homepage news articles ----------------------------------------------
+
+    function renderArticles(articles) {
+      const grid = document.querySelector('.articles-grid');
+      if (!grid) return;
+      grid.innerHTML = articles.map((a) => `
+        <article class="article-card">
+          <div class="article-source" style="background:${escapeHtml(a.badge_color)};color:#fff;display:inline-block;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;">${escapeHtml(a.badge_label)}</div>
+          <h3>${a.url
+            ? `<a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">${escapeHtml(a.title)}</a>`
+            : escapeHtml(a.title)}</h3>
+          <p>${escapeHtml(a.body)}</p>
+          <time>${escapeHtml(a.time_label)}</time>
+        </article>`).join('');
+    }
+
+    async function refreshArticles() {
+      const adminContainer = document.getElementById('articles-admin');
+      const { data } = await supabase.from('homepage_articles').select('*').order('sort_order');
+      const articles = data || [];
+      renderArticles(articles);
+
+      const ctx = await getEditContext();
+      if (adminContainer && ctx?.role === 'admin') {
+        mountArticlesAdmin(adminContainer, articles, refreshArticles);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
+      refreshNotices();
+      refreshArticles();
       const fallbackImages = [
         'skin/design/sec_bg.jpg',
         'skin/design/555.jpg',

@@ -43,14 +43,51 @@ const { title, description, hideSignupPopup = false, hideEditBar = false } = Ast
   <Footer />
   {!hideSignupPopup && <RegistrationPopup />}
   <script>
+    import { supabase } from '../lib/supabase.js';
     import { initSportContent } from '../lib/sportContent.js';
-    import { getEditContext, mountEditBar } from '../lib/inlineEditor.js';
+    import { getEditContext, mountEditBar, mountAdSlotEditor } from '../lib/inlineEditor.js';
 
     initSportContent();
 
     if (document.body.dataset.hideEditBar !== 'true') {
       getEditContext().then(mountEditBar);
     }
+
+    async function loadAds() {
+      const adEls = document.querySelectorAll('[data-ad-slot]');
+      if (!adEls.length) return;
+      const { data } = await supabase.from('site_ads').select('*');
+      const bySlot = Object.fromEntries((data || []).map((row) => [row.slot, row]));
+
+      const ctx = await getEditContext();
+      const isAdmin = ctx?.role === 'admin';
+
+      adEls.forEach((adEl) => {
+        const slot = adEl.dataset.adSlot;
+        const row = bySlot[slot];
+        adEl.innerHTML = '';
+        if (row?.image_url) {
+          const img = document.createElement('img');
+          img.src = row.image_url;
+          img.alt = row.caption || '';
+          if (row.link_url) {
+            const link = document.createElement('a');
+            link.href = row.link_url;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.appendChild(img);
+            adEl.appendChild(link);
+          } else {
+            adEl.appendChild(img);
+          }
+        } else {
+          adEl.textContent = row?.caption || (slot === 'left' ? 'פרסומת שמאל' : 'פרסומת ימין');
+        }
+
+        if (isAdmin) mountAdSlotEditor(adEl, slot, row, loadAds);
+      });
+    }
+    loadAds();
   </script>
 </body>
 </html>

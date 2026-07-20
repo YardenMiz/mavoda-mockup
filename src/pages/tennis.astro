@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title={`טניס - העמותה לספורט`} description={`ליגת הטניס של העמותה לספורט מרחב חיפה והצפון — משחקים קרובים, תוצאות אחרונות וגלריה.`}>
 <div class="moving-strip"><div class="strip-content"><span class="strip-item">🔴 משחק חי</span><span class="strip-item">⚽ תוצאות</span><span class="strip-item">🏀 ליגות</span><span class="strip-item">🏊 אירועים</span><span class="strip-item">📰 חדשות</span><span class="strip-item">🔴 משחק חי</span><span class="strip-item">⚽ תוצאות</span><span class="strip-item">🏀 ליגות</span><span class="strip-item">🏊 אירועים</span><span class="strip-item">📰 חדשות</span></div></div>
   
-  <main class="container" data-sport="tennis"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder">פרסומת שמאל</div></aside><div class="main-content">
+  <main class="container" data-sport="tennis"><div class="page-shell"><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="left"></div></aside><div class="main-content">
     <a href="index.html" class="back-link">← חזרה למסך הבית</a>
     <div class="sport-detail-header"><h1>טניס</h1></div>
     <div class="coordinator-info">
@@ -34,7 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div id="regulations" class="tab-content"><div class="regulations-text"><h3>כללי המשחק</h3><p>הטורנירים מנוהלים לפי כללי ATP ו-WTA. כל משחק מורכב משלוש סטות, והשחקן הראשון להגיע ל-6 משחקים בסט מנצח את הסט.</p><h3>דרישות השתתפות</h3><p>שחקנים חייבים להיות רשומים בפדרציה ולעמוד בדרישות גיל. דמי רישום משתנים לפי סוג הטורניר.</p></div></div>
-  </div><aside class="side-panel"><div class="ad-placeholder">פרסומת ימין</div></aside></div></main>
+  </div><aside class="side-panel"><div class="ad-placeholder" data-ad-slot="right"></div></aside></div></main>
   <script is:inline>
     document.querySelectorAll('.tab-button').forEach(button => {
       button.addEventListener('click', function() {
