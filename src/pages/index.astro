@@ -41,7 +41,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     .right-column .sidebar-section {
       flex: 0 1 auto;
-      height: 50%;
+      height: 60%;
+    }
+    /* main.container is zoomed 0.75x on this page only, but the fixed
+       strip+header (132px real) are outside that zoomed subtree, so the
+       normal 132px margin-top renders as only 99px here and the ad boxes'
+       top edge clips under the header. Compensate for the zoom. */
+    .page-shell {
+      margin-top: 184px;
+    }
+    /* Same zoom compensation: 50vh (the site-wide ad height) renders as
+       37.5vh here unless scaled back up so the banner still reaches the
+       middle of the real screen. */
+    .ad-placeholder {
+      height: 67vh;
     }
     .right-column .image-carousel {
       flex: 1;
@@ -112,6 +125,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border-radius: 8px;
       border-right: 4px solid #0b66ff;
     }
+    #carousel-image {
+      cursor: pointer;
+    }
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .image-lightbox[hidden] {
+      display: none;
+    }
+    .image-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    .image-lightbox-close {
+      position: fixed;
+      top: 20px;
+      inset-inline-end: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 36px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 5001;
+    }
   </style>
 </Fragment>
 
@@ -135,6 +181,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div id="site-gallery-admin"></div>
         </aside>
+      </div>
+      <div id="image-lightbox" class="image-lightbox" hidden>
+        <button type="button" class="image-lightbox-close" aria-label="סגור">&times;</button>
+        <img id="image-lightbox-img" src="" alt="תמונה מוגדלת">
       </div>
     <div class="center-column leagues-categories">
       <div class="league-category" data-sport="כדורעף">
@@ -402,6 +452,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       // Event listeners
       prevBtn.addEventListener('click', prevImage);
       nextBtn.addEventListener('click', nextImage);
+
+      // Lightbox: click the carousel image to view it centered/enlarged
+      const lightbox = document.getElementById('image-lightbox');
+      const lightboxImg = document.getElementById('image-lightbox-img');
+      const lightboxClose = lightbox.querySelector('.image-lightbox-close');
+
+      function openLightbox() {
+        lightboxImg.src = carouselImage.src;
+        lightbox.hidden = false;
+      }
+      function closeLightbox() {
+        lightbox.hidden = true;
+      }
+
+      carouselImage.addEventListener('click', openLightbox);
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+      });
     });
   </script>
 </BaseLayout>

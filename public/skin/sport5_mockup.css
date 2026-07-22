@@ -1,7 +1,19 @@
 /* Minimal mockup stylesheet to approximate sport5.co.il look */
 html{zoom:1}
 *{box-sizing:border-box}
-body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;min-height:100vh;overflow-x:hidden}
+body{font-family:Rubik, Arial, sans-serif;margin:0;background:#f6f6f6;color:#1f2937;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column}
+/* Sticky footer: body is now a flex column, so the pre-existing
+   `main.container{flex-grow:1}` rule below actually takes effect — main
+   stretches to fill any leftover space and pushes the footer to the true
+   bottom of the screen on short pages, while long pages still scroll
+   normally since main just grows past the viewport. */
+.mock-footer{flex-shrink:0}
+/* .container's margin:0 auto (below) is meant for centering within a
+   non-flex parent. As a direct flex child of body, auto margins on the
+   cross axis grab the leftover width instead of letting align-items:stretch
+   apply, which shrank every page's main content into a narrow centered
+   column. Zero them out so main stays full width. */
+main.container{margin-left:0;margin-right:0}
 
 /* Moving Strip Animation */
 @keyframes scroll {
@@ -72,7 +84,9 @@ body.ie-edit-bar-active .mock-header {
   padding:20px 24px 100px;
   margin-top:132px; /* 56px (סטריפ) + 76px (גובה ההדר לפי height:76px בinner) */
 }.page-shell > .side-panel{background:linear-gradient(180deg,#ffffff 0%, #f7f7f7 100%);border:1px solid #e5e7eb;border-radius:14px;min-height:320px;box-shadow:0 2px 8px rgba(0,0,0,0.04);padding:16px}
-.page-shell > .side-panel .ad-placeholder{display:flex;align-items:center;justify-content:center;height:220px;border:1px dashed #cbd5e1;border-radius:10px;color:#64748b;font-size:14px;font-weight:600;background:#fff} /* */
+.page-shell > .side-panel .ad-placeholder{display:flex;align-items:center;justify-content:center;height:50vh;border:none;border-radius:12px;color:#64748b;font-size:14px;font-weight:700;background:transparent;box-shadow:none;overflow:hidden;text-align:center;padding:16px}
+.ad-placeholder a{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
+.ad-placeholder img{width:100%;height:100%;object-fit:cover;border-radius:12px}
 .page-shell > .main-content{min-width:0}
 .header-inner {
   display: flex;
@@ -486,6 +500,8 @@ body.ie-edit-bar-active .mock-header {
 .results-item .teams { flex: 1; font-weight: 600; color: #1f2937; }
 .results-item .score { font-size: 20px; font-weight: 700; color: #0b66ff; margin: 0 16px; }
 .results-item .date { color: #94a3b8; font-size: 13px; }
+.results-item .location { color: #94a3b8; font-size: 13px; margin-top: 2px; }
+.results-item .time { color: #94a3b8; font-size: 13px; }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .gallery-item { aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #e8e8e8; cursor: pointer; transition: transform 0.3s ease; }
 .gallery-item:hover { transform: scale(1.05); }
@@ -493,8 +509,20 @@ body.ie-edit-bar-active .mock-header {
 .regulations-text { line-height: 1.8; color: #4b5563; font-size: 15px; }
 .regulations-text h3 { color: #1f2937; margin-top: 20px; margin-bottom: 12px; font-size: 16px; }
 .regulations-text p { margin: 0 0 12px 0; }
+.regulation-controls { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.regulation-file-link, .regulation-print-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;
+  text-decoration: none; cursor: pointer; border: 1px solid #0b66ff; color: #0b66ff; background: #fff;
+  font-family: inherit;
+}
+.regulation-file-link:hover, .regulation-print-btn:hover { background: #0b66ff; color: #fff; }
 .back-link { display: inline-block; margin-bottom: 20px; color: #0b66ff; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
 .back-link:hover { color: #0050d8; }
-.coordinator-info { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.coordinator-info { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 20px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.coordinator-photo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.coordinator-details { display: flex; flex-direction: column; gap: 4px; }
 .coordinator-name { font-weight: 600; color: #1f2937; font-size: 16px; }
 .coordinator-phone { color: #0b66ff; font-size: 15px; font-weight: 500; }
+.coordinator-email { color: #475569; font-size: 14px; }
+.coordinator-email:empty { display: none; }

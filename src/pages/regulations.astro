@@ -233,16 +233,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div id="modalContent">
         <p>תוכן התקנון יוצג כאן...</p>
       </div>
+      <div id="modalControls"></div>
     </div>
   </div>
 
   <script>
     import { supabase } from '../lib/supabase.js';
+    import { renderRegulationControls } from '../lib/printRegulation.js';
 
     // Modal functionality
     const modal = document.getElementById('regulationModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalContent = document.getElementById('modalContent');
+    const modalControls = document.getElementById('modalControls');
     const closeBtn = document.getElementsByClassName('close')[0];
 
     // Fallback content, used only if the Supabase fetch below fails or a
@@ -419,10 +422,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     // Load live regulations from Supabase so edits made in /admin show up
     // here immediately, without needing a new deploy.
     let regsBySlug = {};
+    let fileUrlBySlug = {};
     try {
-      const { data } = await supabase.from('sport_regulations').select('sport_slug, body');
+      const { data } = await supabase.from('sport_regulations').select('sport_slug, body, file_url');
       if (data) {
-        for (const row of data) regsBySlug[row.sport_slug] = row.body;
+        for (const row of data) {
+          regsBySlug[row.sport_slug] = row.body;
+          fileUrlBySlug[row.sport_slug] = row.file_url;
+        }
       }
     } catch (e) {
       // Supabase unreachable: fall through to the static fallback content below.
@@ -438,8 +445,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const liveBody = regsBySlug[slug];
         const fallback = regulations[sportName];
         if (!liveBody && !fallback) return;
-        modalTitle.textContent = `תקנון ${sportName}`;
-        modalContent.innerHTML = liveBody || fallback.content;
+        const title = `תקנון ${sportName}`;
+        const bodyHtml = liveBody || fallback.content;
+        modalTitle.textContent = title;
+        modalContent.innerHTML = bodyHtml;
+        renderRegulationControls(modalControls, { title, bodyHtml, fileUrl: fileUrlBySlug[slug] });
         modal.style.display = 'flex';
       });
     });

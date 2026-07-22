@@ -48,6 +48,10 @@ function injectStyles() {
     .ie-reg-section .ie-reg-delete { background: #d33; color: #fff; border: none; border-radius: 6px;
       padding: 4px 10px; cursor: pointer; width: fit-content; }
     .ie-form-error { color: #d33; font-size: 13px; margin: 0; }
+    .ie-reg-file-row { display: flex; flex-direction: column; gap: 6px; }
+    .ie-reg-file-status { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .ie-reg-file-status .ie-reg-delete { background: #d33; color: #fff; border: none; border-radius: 6px;
+      padding: 3px 8px; cursor: pointer; font-size: 12px; }
     .ie-manage-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; font-family: Rubik, Arial, sans-serif; }
     .ie-manage-row { background: #f8f9fa; border-radius: 8px; padding: 10px 12px; display: flex;
       justify-content: space-between; align-items: flex-start; gap: 10px; }
@@ -61,7 +65,6 @@ function injectStyles() {
     .ie-ad-edit-btn { position: absolute; bottom: 6px; inset-inline-end: 6px; background: #111827; color: #fff;
       border: none; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; z-index: 5; }
     .ad-placeholder { position: relative; }
-    .ad-placeholder img { max-width: 100%; border-radius: 8px; }
     .ie-about-edit-btn { margin-inline-start: 10px; }
     .ie-board-row-form { display: flex; gap: 6px; align-items: center; }
     .ie-board-row-form input { padding: 4px 8px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
@@ -219,6 +222,8 @@ function ensureControlsWrapper(container) {
 function mountCoordinatorEditing(main, slug, refresh) {
   const nameEl = main.querySelector('.coordinator-name');
   const phoneEl = main.querySelector('.coordinator-phone');
+  const emailEl = main.querySelector('.coordinator-email');
+  const photoEl = main.querySelector('.coordinator-photo');
   if (!nameEl && !phoneEl) return;
 
   const anchor = phoneEl || nameEl;
@@ -231,6 +236,9 @@ function mountCoordinatorEditing(main, slug, refresh) {
     form.innerHTML = `
       <input type="text" class="ie-coord-name" placeholder="שם הרכז">
       <input type="text" class="ie-coord-phone" placeholder="טלפון">
+      <input type="email" class="ie-coord-email" placeholder="אימייל" style="direction:ltr;text-align:left">
+      <label style="font-size:13px;color:#555">תמונת הרכז (אופציונלי)</label>
+      <input type="file" class="ie-coord-photo-file" accept="image/*">
       <div class="ie-form-actions">
         <button type="button" class="ie-save-btn">שמור</button>
         <button type="button" class="ie-cancel-btn">ביטול</button>
@@ -238,13 +246,31 @@ function mountCoordinatorEditing(main, slug, refresh) {
     `;
     const nameInput = form.querySelector('.ie-coord-name');
     const phoneInput = form.querySelector('.ie-coord-phone');
+    const emailInput = form.querySelector('.ie-coord-email');
     nameInput.value = (nameEl?.textContent || '').replace(/^רכז:\s*/, '');
     phoneInput.value = (phoneEl?.textContent || '').replace(/^טלפון:\s*/, '');
+    emailInput.value = emailEl?.textContent || '';
 
-    form.querySelector('.ie-save-btn').addEventListener('click', async () => {
+    const saveBtn = form.querySelector('.ie-save-btn');
+    saveBtn.addEventListener('click', async () => {
+      const file = form.querySelector('.ie-coord-photo-file').files[0];
+      let coordinator_photo = photoEl && !photoEl.hidden ? photoEl.src : null;
+      if (file) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'מעלה...';
+        const { url, error: uploadError } = await uploadImageFile(file, `${slug}/coordinator`);
+        if (uploadError) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'שמור';
+          return showFormError(form, uploadError);
+        }
+        coordinator_photo = url;
+      }
       const { error } = await supabase.from('sports').update({
         coordinator_name: nameInput.value,
         coordinator_phone: phoneInput.value,
+        coordinator_email: emailInput.value.trim() || null,
+        coordinator_photo,
       }).eq('slug', slug);
       if (error) return showFormError(form, error);
       form.remove();
@@ -278,9 +304,12 @@ function mountMatchesEditing(main, slug, refresh) {
       if (wrapper.querySelector('.ie-inline-form')) return;
       const form = document.createElement('div');
       form.className = 'ie-inline-form';
+      const currentYear = new Date().getFullYear();
       form.innerHTML = `
         <input type="text" class="ie-opponent" placeholder="קבוצות / תיאור">
         <input type="text" class="ie-when" placeholder="${withScore ? 'תאריך' : 'מתי (למשל: שבת, 18:00)'}">
+        <input type="text" class="ie-location" placeholder="מיקום המשחק (אופציונלי)">
+        <input type="number" class="ie-season-year" placeholder="שנה" value="${currentYear}" min="2000" max="2100">
         ${withScore ? '<input type="text" class="ie-score" placeholder="תוצאה">' : ''}
         <div class="ie-form-actions">
           <button type="button" class="ie-save-btn">הוסף</button>
@@ -295,11 +324,12 @@ function mountMatchesEditing(main, slug, refresh) {
           sport_slug: slug,
           opponent,
           when_label: whenLabel,
+          location: form.querySelector('.ie-location').value.trim() || null,
           is_result: withScore,
+          season_year: Number(form.querySelector('.ie-season-year').value) || currentYear,
         };
         if (withScore) {
           payload.score = form.querySelector('.ie-score').value.trim() || null;
-          payload.season_year = new Date().getFullYear();
         }
         const { error } = await supabase.from('sport_matches').insert(payload);
         if (error) return showFormError(form, error);
@@ -418,6 +448,8 @@ function mountRegulationsEditing(main, slug, refresh) {
     const existingHtml = container.querySelector('.regulations-text')?.innerHTML || '';
     let sections = parseRegulationsHtml(existingHtml);
     if (!sections.length) sections = [{ title: '', content: '' }];
+    let currentFileUrl = container.dataset.fileUrl || '';
+    let removeFile = false;
 
     const form = document.createElement('div');
     form.className = 'ie-inline-form';
@@ -449,6 +481,38 @@ function mountRegulationsEditing(main, slug, refresh) {
     }
     renderSections();
 
+    const fileRow = document.createElement('div');
+    fileRow.className = 'ie-reg-file-row';
+    fileRow.innerHTML = `
+      <label style="font-size:13px;color:#555">קובץ תקנון (PDF וכו', אופציונלי)</label>
+      <input type="file" class="ie-reg-file-input" accept=".pdf,.doc,.docx,.odt">
+    `;
+    form.appendChild(fileRow);
+
+    function renderFileStatus() {
+      fileRow.querySelector('.ie-reg-file-status')?.remove();
+      if (currentFileUrl && !removeFile) {
+        const status = document.createElement('div');
+        status.className = 'ie-reg-file-status';
+        const link = document.createElement('a');
+        link.href = currentFileUrl;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'קובץ נוכחי';
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'ie-reg-delete';
+        removeBtn.textContent = 'הסר קובץ';
+        removeBtn.addEventListener('click', () => {
+          removeFile = true;
+          renderFileStatus();
+        });
+        status.append(link, removeBtn);
+        fileRow.appendChild(status);
+      }
+    }
+    renderFileStatus();
+
     const actions = document.createElement('div');
     actions.className = 'ie-form-actions';
     actions.innerHTML = `
@@ -462,10 +526,25 @@ function mountRegulationsEditing(main, slug, refresh) {
       sections.push({ title: '', content: '' });
       renderSections();
     });
-    actions.querySelector('.ie-save-btn').addEventListener('click', async () => {
+    const saveBtn = actions.querySelector('.ie-save-btn');
+    saveBtn.addEventListener('click', async () => {
+      const file = fileRow.querySelector('.ie-reg-file-input').files[0];
+      let file_url = removeFile ? null : (currentFileUrl || null);
+      if (file) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'מעלה...';
+        const { url, error: uploadError } = await uploadImageFile(file, `${slug}/regulations`);
+        if (uploadError) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'שמור תקנון';
+          return showFormError(form, uploadError);
+        }
+        file_url = url;
+      }
       const { error } = await supabase.from('sport_regulations').upsert({
         sport_slug: slug,
         body: buildRegulationsHtml(sections),
+        file_url,
       }, { onConflict: 'sport_slug' });
       if (error) return showFormError(form, error);
       form.remove();
