@@ -4,8 +4,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title={`תקנונים - העמותה לספורט - מרחב חיפה והצפון`} description={`תקנוני הליגות של כל ענפי הספורט בעמותה לספורט מרחב חיפה והצפון.`}>
 <Fragment slot="head">
   <style>
-    .page-shell {
-      zoom: 0.75;
+    /* Desktop-only zoom, matching index.astro's pattern. Also fixes a
+       pre-existing desktop bug: this rule previously had no margin-top
+       compensation at all (unlike index.astro), so the fixed header could
+       overlap the top of the page-shell at any width. Below 901px this
+       falls back to the base margin-top:132px, which is correct as-is. */
+    @media (min-width: 901px) {
+      .page-shell {
+        zoom: 0.75;
+        margin-top: 184px;
+      }
     }
     .header-actions {
       text-align: center;
@@ -50,6 +58,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       object-fit: cover;
       border-radius: 10px;
       margin-bottom: 16px;
+    }
+    @media (max-width: 900px) {
+      .regulations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 620px) {
+      .regulations-grid {
+        grid-template-columns: 1fr;
+      }
+      .regulation-card {
+        padding: 24px;
+      }
     }
     .regulation-card h3 {
       margin: 0 0 12px;

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.3",
-    "astro": "^7.0.7"
+    "astro": "^7.0.7",
+    "astro-tunnel": "^0.1.9"
   }
 }

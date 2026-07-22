@@ -4,8 +4,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title={`העמותה לספורט - מרחב חיפה והצפון`} description={`העמותה לספורט במרחב חיפה והצפון — ליגות חובבים, תוצאות, לוחות זמנים והרשמה לענפי ספורט לכל הגילאים.`}>
 <Fragment slot="head">
   <style>
-    main.container {
-      zoom: 0.75;
+    /* Desktop-only: shrinks the page 25% to fit more on screen. Left at
+       natural 1:1 scale on mobile/tablet, where there's no spare width to
+       spend on a zoom-out anyway. */
+    @media (min-width: 901px) {
+      main.container {
+        zoom: 0.75;
+      }
     }
     .header-actions {
       text-align: center;
@@ -43,22 +48,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       flex: 0 1 auto;
       height: 60%;
     }
-    /* main.container is zoomed 0.75x on this page only, but the fixed
-       strip+header (132px real) are outside that zoomed subtree, so the
-       normal 132px margin-top renders as only 99px here and the ad boxes'
-       top edge clips under the header. Compensate for the zoom. */
-    .page-shell {
-      margin-top: 184px;
-    }
-    /* Same zoom compensation: 50vh (the site-wide ad height) renders as
-       37.5vh here unless scaled back up so the banner still reaches the
-       middle of the real screen. */
-    .ad-placeholder {
-      height: 67vh;
+    /* main.container is zoomed 0.75x on this page only (desktop-only, see
+       above), but the fixed strip+header (132px real) are outside that
+       zoomed subtree, so the normal 132px margin-top renders as only 99px
+       here and the ad boxes' top edge clips under the header. Compensate
+       for the zoom — desktop-only, since mobile doesn't zoom. */
+    @media (min-width: 901px) {
+      .page-shell {
+        margin-top: 184px;
+      }
+      /* Same zoom compensation: 50vh (the site-wide ad height) renders as
+         37.5vh here unless scaled back up so the banner still reaches the
+         middle of the real screen. Selector matches the shared rule's
+         specificity (.page-shell > .side-panel .ad-placeholder) so this
+         reliably wins instead of silently losing to the 50vh default. */
+      .page-shell > .side-panel .ad-placeholder {
+        height: 67vh;
+      }
     }
     .right-column .image-carousel {
       flex: 1;
       height: auto;
+    }
+    @media (max-width: 900px) {
+      .sports-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .right-column {
+        height: auto;
+      }
+      .right-column .sidebar-section {
+        height: auto;
+      }
+      .right-column .image-carousel {
+        height: 220px;
+      }
     }
     /* News sits below the notices list, each in its own distinct white
        card rather than sharing one continuous background. Notices is

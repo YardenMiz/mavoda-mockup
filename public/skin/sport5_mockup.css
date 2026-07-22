@@ -101,6 +101,7 @@ body.ie-edit-bar-active .mock-header {
 .main-nav{display:flex;gap:16px;margin:0;padding:0;list-style:none}
 .main-nav a{color:#fff;text-decoration:none;padding:10px 14px;font-weight:600;border-radius:6px;transition:all 0.3s ease;font-size:15px}
 .main-nav a:hover{background:rgba(255,255,255,0.12);color:#e8f0ff}
+.nav-toggle{display:none}
 .header-actions{text-align:center}
 .header-actions .search{width:150px;background:#3ac41e;border:1px solid #024616;color:#000;border-radius:20px;padding:8px 12px;font-size:13px} /* */
 .header-actions .search option{color:#000;background:#fff} /* */
@@ -200,8 +201,12 @@ body.ie-edit-bar-active .mock-header {
 
 @media (max-width:900px){
   .three-columns{grid-template-columns:1fr}
-  .page-shell{grid-template-columns:1fr;gap:16px;padding:16px 16px 100px}
+  /* header-inner wraps to 2 rows below this width (logo-area alone forces
+     it), so the fixed header is taller than the base margin-top:132px
+     assumes — measured ~178px real height, so bump the compensation. */
+  .page-shell{grid-template-columns:1fr;gap:16px;padding:16px 16px 100px;margin-top:184px}
   .page-shell > .side-panel{min-height:auto}
+  .page-shell > .side-panel .ad-placeholder{height:200px}
   .header-inner{flex-wrap:wrap;height:auto;gap:12px;padding:0 16px}
   .main-nav{order:3;width:100%;justify-content:center;margin-top:12px}
   .header-actions{order:2}
@@ -215,7 +220,15 @@ body.ie-edit-bar-active .mock-header {
       .league-category img{width:84px;height:84px}
   .league-category span{font-size:16px}
   .three-columns{grid-template-columns:1fr}
-  .main-nav{display:none}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;order:2;
+    width:40px;height:40px;border:none;border-radius:8px;background:rgba(255,255,255,0.12);
+    color:#fff;font-size:20px;cursor:pointer}
+  .main-nav{display:none;position:absolute;top:100%;inset-inline:0;order:0;margin-top:0;
+    flex-direction:column;gap:0;background:#0b1620;padding:8px 0;
+    box-shadow:0 8px 16px rgba(0,0,0,0.25);z-index:1150}
+  .main-nav.is-open{display:flex}
+  .main-nav a{width:100%;text-align:center;padding:14px 0;border-radius:0;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .main-nav a:last-child{border-bottom:none}
   .header-actions .search{width:100%;max-width:200px}
   .strip-item{padding:0 20px;font-size:13px}
   .hero-title{font-size:32px}
@@ -502,6 +515,19 @@ body.ie-edit-bar-active .mock-header {
 .results-item .date { color: #94a3b8; font-size: 13px; }
 .results-item .location { color: #94a3b8; font-size: 13px; margin-top: 2px; }
 .results-item .time { color: #94a3b8; font-size: 13px; }
+@media (max-width:620px){
+  /* Placed after the base rules above (not in the earlier 620px block)
+     so overflow-x:auto reliably overrides the base .tabs-nav{overflow:hidden}
+     shorthand — same specificity, so source order decides. */
+  .tabs-nav{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tabs-nav button{flex:0 0 auto;white-space:nowrap;padding:12px 16px;font-size:13px}
+  .tab-content{padding:16px}
+  .year-selector{flex-wrap:wrap}
+  .year-selector select{flex:1;min-width:0}
+  .results-item{flex-direction:column;align-items:flex-start;gap:6px}
+  .results-item .score{margin:0;font-size:18px}
+  .image-carousel{height:220px}
+}
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .gallery-item { aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #e8e8e8; cursor: pointer; transition: transform 0.3s ease; }
 .gallery-item:hover { transform: scale(1.05); }
